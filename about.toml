@@ -1,0 +1,12 @@
+accepted = [
+    "Apache-2.0",
+    "MIT",
+    "BSD-2-Clause",
+    "MPL-2.0",
+    "CC0-1.0",
+    "BSD-3-Clause",
+    "Unicode-DFS-2016",
+]
+no-clearly-defined = true
+[ltapiserv-rs]
+accepted = ["GPL-3.0"]
