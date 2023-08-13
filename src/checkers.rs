@@ -1,3 +1,4 @@
+use std::collections::HashSet;
 /// LanguageTool rules (using [`nlprule`]) and spell checking (using [`symspell`])
 use std::fmt::Write;
 use std::path::Path;
@@ -35,6 +36,7 @@ pub struct Checkers {
     tokenizer: nlprule::Tokenizer,
     rules: nlprule::Rules,
     spelling: symspell::SymSpell<symspell::AsciiStringStrategy>,
+    custom_dictionary: HashSet<String>,
     pub language: api::Language,
 }
 impl Checkers {
@@ -60,9 +62,25 @@ impl Checkers {
         Ok(Self {
             tokenizer: nlprule::Tokenizer::new(tokenizer)?,
             rules: nlprule::Rules::new(rules)?,
+            custom_dictionary: Default::default(),
             spelling,
             language,
         })
+    }
+    /// Add a custom dictionary (one word per line)
+    pub fn add_dictionary(&mut self, filename: &Path) -> anyhow::Result<()> {
+        self.custom_dictionary.extend(
+            std::fs::read_to_string(filename)?
+                .lines()
+                .flat_map(|l| l.split_ascii_whitespace())
+                .map(str::to_ascii_lowercase),
+        );
+        info!(
+            "Added dictionary {:?}, currently {} custom words",
+            filename,
+            self.custom_dictionary.len()
+        );
+        Ok(())
     }
     fn from_archive_bytes_impl(archive: &[u8]) -> anyhow::Result<Self> {
         info!("Subsequent initializations will be significantly faster.");
@@ -155,6 +173,10 @@ impl Checkers {
                 let word_str = unidecode::unidecode(word.as_str());
 
                 let next_token = tokens.get(i + 1);
+                if !word_str.chars().all(char::is_alphabetic) {
+                    continue;
+                }
+
                 // Repetitions
                 if let Some(length) = next_token
                     .filter(|t| t.word() == token.word())
@@ -170,9 +192,11 @@ impl Checkers {
                     })
                 }
 
+                let word_str_lowercase = word_str.to_lowercase();
                 // Spelling
-                // Skip numbers
-                if word_str.chars().all(|c| !c.is_numeric())
+                if !(self.custom_dictionary.contains(&word_str_lowercase)
+                     || self.custom_dictionary.contains(word_str_lowercase.trim_end_matches('s'))
+                )
                     // Skip short words
                     && word_str.chars().count() >= 3
                     // Skip if next character is an apostrophe (contraction/possession) for now
@@ -180,7 +204,7 @@ impl Checkers {
                         .map_or(true, |c| c.word().as_str() != "'" && c.word().as_str() != "’")
                 {
                     let mut results = self.spelling.lookup(
-                        &word_str.to_lowercase(),
+                        &word_str_lowercase,
                         symspell::Verbosity::Closest,
                         MAX_EDIT_DISTANCE as i64,
                     );
@@ -196,6 +220,7 @@ impl Checkers {
                     if let Some(result) = results.first() {
                         write!(message, " Did you mean {}?", result.term).unwrap();
                     }
+                    // TODO: Restore case
                     suggestions.push(api::Match {
                         message,
                         rule: api::Rule::spelling(),

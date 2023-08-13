@@ -6,6 +6,8 @@ accepted = [
     "CC0-1.0",
     "BSD-3-Clause",
     "Unicode-DFS-2016",
+    "ISC",
+    "OpenSSL"
 ]
 no-clearly-defined = true
 [ltapiserv-rs]

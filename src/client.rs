@@ -43,7 +43,10 @@ async fn main() -> anyhow::Result<()> {
         .await?;
 
     // Report errors
-    let filename = args.filename.map(|f| f.to_string_lossy().into_owned()).unwrap_or("stdin".to_string());
+    let filename = args
+        .filename
+        .map(|f| f.to_string_lossy().into_owned())
+        .unwrap_or("stdin".to_string());
     let mut report = Report::build(ReportKind::Error, &filename, 0);
     if resp.matches.is_empty() {
         eprintln!("No errors found");
@@ -51,7 +54,7 @@ async fn main() -> anyhow::Result<()> {
     }
     for m in &resp.matches {
         report = report.with_label(
-            Label::new((&filename,m.offset..m.offset + m.length))
+            Label::new((&filename, m.offset..m.offset + m.length))
                 .with_message(&m.message)
                 .with_color(if m.rule.is_spelling() {
                     Color::Green

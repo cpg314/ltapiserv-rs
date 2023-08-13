@@ -17,9 +17,11 @@ The recommended method is to get a binary from the release page and install it a
 $ sudo cp ltapiserv-rs /usr/local/bin
 $ sudo chmod +x /usr/local/bin/ltapiserv-rs
 $ ln -s $(pwd)/ltapiserv-rs.service ~/.config/systemd/user/ltapiserv-rs.service
-$ systemctl --user daemon-reload && systemctl --user restart ltapiserv-rs
+$ systemctl --user daemon-reload && systemctl --user enable --now ltapiserv-rs
 $ systemctl --user status ltapiserv-rs
 ```
+
+A path to a custom dictionary can be passed to the server via the `--dictionary` option.
 
 Alternatively, binaries can be built from source as follows:
 

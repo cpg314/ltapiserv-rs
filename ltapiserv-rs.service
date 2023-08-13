@@ -6,7 +6,7 @@ StartLimitIntervalSec=0
 Type=simple
 Restart=always
 RestartSec=20
-ExecStart=/usr/local/bin/ltapiserv-rs  --port 8875
+ExecStart=/usr/local/bin/ltapiserv-rs  --port 8875 --dictionary %h/dictionary.txt
 
 [Install]
 WantedBy=multi-user.target

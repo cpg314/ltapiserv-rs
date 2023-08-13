@@ -15,6 +15,8 @@ struct Flags {
     // Path to a .tar.gz data archive. If not provided, the data will be loaded from the binary.
     #[clap(long)]
     archive: Option<PathBuf>,
+    #[clap(long)]
+    dictionary: Option<PathBuf>,
     #[clap(long, default_value_t = 8875)]
     port: u16,
     #[clap(long, short)]
@@ -102,11 +104,14 @@ async fn main() -> anyhow::Result<()> {
     // Setup checkers
     let start = std::time::Instant::now();
     info!("Initializing...");
-    let checkers = if let Some(archive) = args.archive {
+    let mut checkers = if let Some(archive) = args.archive {
         Checkers::from_archive(&archive)?
     } else {
         Checkers::from_archive_bytes(include_bytes!("../en_US.tar.gz"))?
     };
+    if let Some(dictionary) = args.dictionary {
+        checkers.add_dictionary(&dictionary)?;
+    }
     let checkers = Arc::new(checkers);
     info!(
         "Done initializing {} checkers in in {:?}",
