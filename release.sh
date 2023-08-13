@@ -9,6 +9,6 @@ do
     cargo about generate about.hbs > licenses.html
     DEST=target/$PACKAGE-$VERSION-$ARCH.zip
     echo $DEST
-    zip -j -r $DEST target/$ARCH/release/$PACKAGE licenses.html
+    zip -j -r $DEST target/$ARCH/release/$PACKAGE target/$ARCH/release/ltapi-client licenses.html
     zip -sf $DEST
 done

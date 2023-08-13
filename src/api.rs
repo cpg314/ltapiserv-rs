@@ -53,13 +53,20 @@ pub struct TextData {
 }
 
 /// API request. Either text or data need to be provided
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct Request {
     text: Option<String>,
     data: Option<String>,
     language: String,
 }
 impl Request {
+    pub fn new<S: Into<String>>(text: String, language: S) -> Self {
+        Self {
+            text: Some(text),
+            data: None,
+            language: language.into(),
+        }
+    }
     pub fn language(&self) -> Language {
         if self.language == "auto" {
             return Default::default();
@@ -80,12 +87,12 @@ impl Request {
         }
     }
 }
-#[derive(Serialize, Debug)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct Response {
     pub matches: Vec<Match>,
     pub language: LanguageResponse,
 }
-#[derive(Serialize, Debug)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct LanguageResponse {
     #[serde(flatten)]
     language: Language,
@@ -100,19 +107,19 @@ impl From<Language> for LanguageResponse {
     }
 }
 
-#[derive(Serialize, Default, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct MatchType {
     pub type_name: String,
 }
 
-#[derive(Serialize, Default, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct RuleCategory {
     id: String,
     name: String,
 }
-#[derive(Serialize, Default, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct Rule {
     id: String,
@@ -124,6 +131,9 @@ pub struct Rule {
     is_premium: bool,
 }
 impl Rule {
+    pub fn is_spelling(&self) -> bool {
+        self.id == "MORFOLOGIK_RULE"
+    }
     pub fn spelling() -> Self {
         Self {
             // This will get rendered by the browser extension as a spelling error
@@ -153,7 +163,7 @@ impl Rule {
     }
 }
 
-#[derive(Serialize, Default, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct Replacement {
     value: String,
@@ -176,7 +186,7 @@ impl From<String> for Replacement {
     }
 }
 
-#[derive(Serialize, Default, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct Match {
     pub message: String,

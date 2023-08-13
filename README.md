@@ -1,30 +1,32 @@
 # ltapiserv-rs
 
-Server implementation of the LanguageTool API for offline grammar and spell checking, based on:
+Server implementation of the LanguageTool API for **offline grammar and spell checking**, based on:
 
 - https://github.com/bminixhofer/nlprule for grammar and style checking, using the [LanguageTool rules](https://github.com/languagetool-org/languagetool).
 - https://github.com/reneklacan/symspell for spell-checking
 
-See <https://c.pgdm.ch/notes/ltapiserv-rs>
+This also contains a simple command-line client, displaying results graphically with [ariadne](https://docs.rs/ariadne/latest/ariadne/index.html).
+
+See <https://c.pgdm.ch/eps-projects/ltapiserv-rs>
 
 ## Installation
 
-Build with Cargo:
+The recommended method is to get a binary from the release page and install it as a systemd service:
+
+```console
+$ sudo cp ltapiserv-rs /usr/local/bin
+$ sudo chmod +x /usr/local/bin/ltapiserv-rs
+$ ln -s $(pwd)/ltapiserv-rs.service ~/.config/systemd/user/ltapiserv-rs.service
+$ systemctl --user daemon-reload && systemctl --user restart ltapiserv-rs
+$ systemctl --user status ltapiserv-rs
+```
+
+Alternatively, binaries can be built from source as follows:
 
 ```console
 $ # Create en_US.tar.gz data archive (will be embedded in the binary).
 $ bash create_archive.sh
 $ cargo build --release
-```
-
-### Systemd service
-
-```console
-$ sudo cp target/release/ltapiserv-rs /usr/local/bin
-$ sudo chmod +x /usr/local/bin/ltapiserv-rs
-$ ln -s $(pwd)/ltapiserv-rs.service ~/.config/systemd/user/ltapiserv-rs.service
-$ systemctl --user daemon-reload && systemctl --user restart ltapiserv-rs
-$ systemctl --user status ltapiserv-rs
 ```
 
 ## Usage
@@ -34,6 +36,19 @@ $ systemctl --user status ltapiserv-rs
 Install the offical LanguageTool browser extension (e.g. for [Chrome](https://languagetool.org/chrome) or [Firefox](https://languagetool.org/firefox)) and configure it to use your local server:
 
 ![Chrome extension settings](chrome_ext.png)
+
+### Command line client
+
+A command line client, `ltapi-client`, is also included in this codebase.
+
+```console
+$ cat text.txt | ltapi-client --server http://localhost:8875
+$ ltapi-client --server http://localhost:8875 test.txt
+```
+
+![Command line interface](client.png)
+
+The return code will be `1` if any error is detected.
 
 ### Flycheck (emacs)
 
