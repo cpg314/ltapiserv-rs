@@ -13,7 +13,7 @@ struct Flags {
     #[clap(long, short, default_value = "en-US")]
     language: String,
     /// Server base URL (e.g. http://localhost:8875)
-    #[clap(long, short)]
+    #[clap(long, short, env = "LTAPI_SERVER")]
     server: reqwest::Url,
 }
 
