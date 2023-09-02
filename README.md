@@ -11,7 +11,7 @@ See <https://c.pgdm.ch/eps-projects/ltapiserv-rs>
 
 ## Installation
 
-The recommended method is to get a binary from the release page and install it as a systemd service:
+The recommended method is to get a binary from the [releases page](https://github.com/cpg314/ltapiserv-rs/releases) and install it as a systemd service:
 
 ```console
 $ sudo cp ltapiserv-rs /usr/local/bin
@@ -21,7 +21,9 @@ $ systemctl --user daemon-reload && systemctl --user enable --now ltapiserv-rs
 $ systemctl --user status ltapiserv-rs
 ```
 
-A path to a custom dictionary can be passed to the server via the `--dictionary` option.
+A path to a custom dictionary can be passed to the server via the `--dictionary` option. The default `systemd` configuration places it in `~/dictionary.txt`.
+
+### From source
 
 Alternatively, binaries can be built from source as follows:
 
@@ -35,7 +37,7 @@ $ cargo build --release
 
 ### Browser extension
 
-Install the offical LanguageTool browser extension (e.g. for [Chrome](https://languagetool.org/chrome) or [Firefox](https://languagetool.org/firefox)) and configure it to use your local server:
+Install the official LanguageTool browser extension (e.g. for [Chrome](https://languagetool.org/chrome) or [Firefox](https://languagetool.org/firefox)) and configure it to use your local server:
 
 ![Chrome extension settings](chrome_ext.png)
 
@@ -51,6 +53,14 @@ $ ltapi-client --server http://localhost:8875 test.txt
 ![Command line interface](client.png)
 
 The return code will be `1` if any error is detected.
+
+The server address can be configured through the `LTAPI_SERVER` environment variable.
+
+Formats like Markdown, HTML, LaTeX etc. can be processed through `pandoc`:
+
+```console
+$ pandoc README.md -t plain | ltapi-client
+```
 
 ### Flycheck (emacs)
 

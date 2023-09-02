@@ -4,7 +4,7 @@ After=network.target
 StartLimitIntervalSec=0
 [Service]
 Type=simple
-Restart=always
+Restart=on-failure
 RestartSec=20
 ExecStart=/usr/local/bin/ltapiserv-rs  --port 8875 --dictionary %h/dictionary.txt
 
