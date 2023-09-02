@@ -200,3 +200,17 @@ pub struct Match {
     pub r#type: MatchType,
     pub rule: Rule,
 }
+
+impl Match {
+    /// Remove likely false positives
+    pub fn filter(&self) -> bool {
+        let rule = &self.rule.id;
+        [
+            "TYPOGRAPHY/EN_QUOTES",
+            // This triggers on lists
+            "PUNCTUATION/DASH_RULE",
+        ]
+        .iter()
+        .all(|r| !rule.starts_with(r))
+    }
+}

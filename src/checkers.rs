@@ -163,7 +163,8 @@ impl Checkers {
                 self.rules
                     .apply(&sentence)
                     .into_iter()
-                    .map(api::Match::from),
+                    .map(api::Match::from)
+                    .filter(api::Match::filter),
             );
             // Repetitions
             let tokens = sentence.tokens();
@@ -199,6 +200,8 @@ impl Checkers {
                 )
                     // Skip short words
                     && word_str.chars().count() >= 3
+                    // Skips all-caps words that are likely acronyms
+                    && !word_str.chars().all(|x| x.is_uppercase())
                     // Skip if next character is an apostrophe (contraction/possession) for now
                     && next_token
                         .map_or(true, |c| c.word().as_str() != "'" && c.word().as_str() != "’")
