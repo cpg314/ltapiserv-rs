@@ -1,6 +1,7 @@
 /// Languagetool HTTP API
 /// Inspired from https://languagetool.org/http-api/, which however doesn't seem to match exactly
 /// what the server returns.
+use anyhow::Context;
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
@@ -48,8 +49,121 @@ mod test {
 }
 
 #[derive(Debug, Deserialize)]
-pub struct TextData {
-    pub text: String,
+#[serde(untagged)]
+#[serde(rename_all = "camelCase")]
+pub enum AnnotationElement {
+    Text {
+        text: String,
+    },
+    Markup {
+        markup: String,
+
+        // Interpret the markup as this string for analysis.
+        // E.g. "\n\n" when `markup` is `<p>`
+        interpret_as: Option<String>,
+    },
+}
+
+impl AnnotationElement {
+    pub fn text(&self) -> &str {
+        match self {
+            AnnotationElement::Text { text } => text,
+            // All whitespace markup should really be handled as what it is to preserve context...
+            AnnotationElement::Markup { markup, .. }
+                if !markup.is_empty() && markup.trim().is_empty() =>
+            {
+                markup
+            }
+            AnnotationElement::Markup { interpret_as, .. } => interpret_as.as_deref().unwrap_or(""),
+        }
+    }
+}
+
+#[derive(Debug, Deserialize)]
+pub struct Annotations {
+    pub annotation: Vec<AnnotationElement>,
+}
+
+#[derive(Debug, Deserialize)]
+#[serde(untagged)]
+pub enum Data {
+    Text { text: String },
+    Annotations(Annotations),
+}
+
+impl Annotations {
+    /// Obtains the text behind the annotations, removing markup
+    pub fn text(&self) -> String {
+        self.annotation
+            .iter()
+            .map(|v| v.text().to_owned())
+            .reduce(|mut acc, v| {
+                acc.push_str(&v);
+                acc
+            })
+            .unwrap_or_default()
+    }
+
+    /// Obtains the length of the text contained in the annotations
+    pub fn text_len(&self) -> usize {
+        self.annotation
+            .iter()
+            .map(|v| match v {
+                AnnotationElement::Text { text } => text.len(),
+                // All whitespace markup should really be handled as what it is to preserve context...
+                AnnotationElement::Markup { markup, .. }
+                    if !markup.is_empty() && markup.trim().is_empty() =>
+                {
+                    markup.len()
+                }
+                AnnotationElement::Markup { interpret_as, .. } => {
+                    interpret_as.as_deref().unwrap_or("").len()
+                }
+            })
+            .sum()
+    }
+
+    /// Translate a textual span into the span of the text containing markup
+    pub fn translate_span(&self, start: usize, end: usize) -> (usize, usize) {
+        let mut text_offset = 0;
+        let mut markup_offset = 0;
+
+        let mut mapped_start: Option<usize> = None;
+        let mut mapped_end: Option<usize> = None;
+
+        for annotation in &self.annotation {
+            let (fragment_text_len, fragment_markup_len) = match annotation {
+                AnnotationElement::Text { text } => (text.len(), text.len()),
+                AnnotationElement::Markup { markup, .. }
+                    if !markup.is_empty() && markup.trim().is_empty() =>
+                {
+                    (markup.len(), markup.len())
+                }
+                AnnotationElement::Markup {
+                    markup,
+                    interpret_as,
+                } => (interpret_as.as_deref().unwrap_or("").len(), markup.len()),
+            };
+
+            let try_set_if_none = |mapped: &mut Option<usize>, original: usize| {
+                if mapped.is_none()
+                    && (original >= text_offset)
+                    && (original < text_offset + fragment_text_len)
+                {
+                    *mapped = Some(markup_offset + (original - text_offset));
+                }
+            };
+            try_set_if_none(&mut mapped_start, start);
+            try_set_if_none(&mut mapped_end, end);
+
+            text_offset += fragment_text_len;
+            markup_offset += fragment_markup_len;
+        }
+        (
+            mapped_start.unwrap_or(0),
+            mapped_end.unwrap_or(markup_offset),
+        )
+    }
 }
 
 /// API request. Either text or data need to be provided
@@ -59,6 +173,7 @@ pub struct Request {
     data: Option<String>,
     language: String,
 }
+
 impl Request {
     pub fn new<S: Into<String>>(text: String, language: S) -> Self {
         Self {
@@ -76,14 +191,26 @@ impl Request {
             name: "".into(),
         }
     }
-    pub fn text(self) -> Option<String> {
-        if let Some(text) = self.text {
-            Some(text)
-        } else if let Some(data) = self.data {
-            let data: Option<TextData> = serde_json::from_str(&data).ok();
-            data.map(|d| d.text)
+
+    pub fn annotations(&self) -> anyhow::Result<Annotations> {
+        if let Some(text) = &self.text {
+            Ok(Annotations {
+                annotation: vec![AnnotationElement::Text {
+                    text: text.to_string(),
+                }],
+            })
+        } else if let Some(data) = &self.data {
+            let data: Data = serde_json::from_str(data)
+                .with_context(|| format!("Unexpected json contents in `data`: {:?}", data))?;
+
+            Ok(match data {
+                Data::Annotations(annotations) => annotations,
+                Data::Text { text } => Annotations {
+                    annotation: vec![AnnotationElement::Text { text }],
+                },
+            })
         } else {
-            None
+            Err(anyhow::anyhow!("Neither `text` nor `data` are valid"))
         }
     }
 }
