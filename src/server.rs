@@ -27,8 +27,8 @@ struct Flags {
 pub enum Error {
     #[error("Unsuported language (supports {supports}, got {request})")]
     UnsuportedLanguage { supports: String, request: String },
-    #[error("Missing text")]
-    MissingText,
+    #[error("Missing text in request: {0:?}")]
+    MissingAnnotations(anyhow::Error),
 }
 
 impl IntoResponse for Error {
@@ -52,12 +52,12 @@ async fn check(
             supports: checkers.language.to_string(),
         });
     }
-    let text = request.text().ok_or(Error::MissingText)?;
-    let text_length = text.len();
+    let annotations = request.annotations().map_err(Error::MissingAnnotations)?;
+    let text_length = annotations.text_len();
 
     // Process in a task
     let resp: api::Response = tokio::task::spawn_blocking(move || api::Response {
-        matches: checkers.suggest(&text),
+        matches: checkers.suggest(&annotations),
         language: checkers.language.clone().into(),
     })
     .await

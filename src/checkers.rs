@@ -13,21 +13,26 @@ use crate::api;
 const MAX_EDIT_DISTANCE: usize = 3;
 
 /// Convert an nlprule suggestion to an [`api::Match`]
-impl From<nlprule::types::Suggestion> for api::Match {
-    fn from(source: nlprule::types::Suggestion) -> Self {
-        debug!("Grammar: {:#?}", source);
-        Self {
-            message: source.message().into(),
-            replacements: source
-                .replacements()
-                .iter()
-                .map(|r| r.clone().into())
-                .collect(),
-            offset: source.span().start().char,
-            length: source.span().len().char,
-            rule: api::Rule::from_id(source.source().into()),
-            ..Default::default()
-        }
+fn suggestion_to_match(
+    source: nlprule::types::Suggestion,
+    annotation: &api::Annotations,
+) -> api::Match {
+    debug!("Grammar: {:#?}", source);
+
+    let (start, end) =
+        annotation.translate_span(source.span().start().char, source.span().end().char);
+
+    api::Match {
+        message: source.message().into(),
+        replacements: source
+            .replacements()
+            .iter()
+            .map(|r| r.clone().into())
+            .collect(),
+        offset: start,
+        length: end - start,
+        rule: api::Rule::from_id(source.source().into()),
+        ..Default::default()
     }
 }
 
@@ -153,9 +158,11 @@ impl Checkers {
         Ok(out)
     }
     /// Compute suggestions on a text
-    pub fn suggest(&self, text: &str) -> Vec<api::Match> {
+    pub fn suggest(&self, annotations: &api::Annotations) -> Vec<api::Match> {
         let mut suggestions = Vec::new();
-        for sentence in self.tokenizer.pipe(text) {
+
+        let text = annotations.text();
+        for sentence in self.tokenizer.pipe(&text) {
             debug!("Processing sentence {:#?}", sentence);
 
             // Grammar suggestions from nlprule
@@ -163,7 +170,7 @@ impl Checkers {
                 self.rules
                     .apply(&sentence)
                     .into_iter()
-                    .map(api::Match::from)
+                    .map(|s| suggestion_to_match(s, annotations))
                     .filter(api::Match::filter),
             );
             // Repetitions
@@ -179,16 +186,17 @@ impl Checkers {
                 }
 
                 // Repetitions
-                if let Some(length) = next_token
-                    .filter(|t| t.word() == token.word())
-                    .map(|t| t.span().end().char - token.span().start().char)
+                if let Some((start, end)) =
+                    next_token.filter(|t| t.word() == token.word()).map(|t| {
+                        annotations.translate_span(token.span().start().char, t.span().end().char)
+                    })
                 {
                     suggestions.push(api::Match {
                         rule: api::Rule::duplication(),
                         message: "Possible typo: you repeated a word".into(),
                         replacements: vec![token.into()],
-                        offset: token.span().start().char,
-                        length,
+                        offset: start,
+                        length: end - start,
                         ..Default::default()
                     })
                 }
@@ -224,6 +232,8 @@ impl Checkers {
                         write!(message, " Did you mean {}?", result.term).unwrap();
                     }
                     // TODO: Restore case
+                    let (start, end) = annotations
+                        .translate_span(token.span().start().char, token.span().end().char);
                     suggestions.push(api::Match {
                         message,
                         rule: api::Rule::spelling(),
@@ -231,8 +241,8 @@ impl Checkers {
                             .into_iter()
                             .map(|result| result.term.into())
                             .collect(),
-                        offset: token.span().start().char,
-                        length: token.span().len().char,
+                        offset: start,
+                        length: end - start,
                         ..Default::default()
                     });
                 }
