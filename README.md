@@ -35,11 +35,13 @@ $ cargo build --release
 
 ## Usage
 
+The following clients have been tested. The server should be compatible with others, but there might be idiosyncrasies; don't hesitate to send a PR.
+
 ### Browser extension
 
 Install the official LanguageTool browser extension (e.g. for [Chrome](https://languagetool.org/chrome) or [Firefox](https://languagetool.org/firefox)) and configure it to use your local server:
 
-![Chrome extension settings](chrome_ext.png)
+![Chrome extension settings](doc/chrome_ext.png)
 
 ### Command line client
 
@@ -50,7 +52,7 @@ $ cat text.txt | ltapi-client --server http://localhost:8875
 $ ltapi-client --server http://localhost:8875 test.txt
 ```
 
-![Command line interface](client.png)
+![Command line interface](doc/client.png)
 
 The return code will be `1` if any error is detected.
 
@@ -62,7 +64,9 @@ Formats like Markdown, HTML, LaTeX etc. can be processed through `pandoc`:
 $ pandoc README.md -t plain | ltapi-client
 ```
 
-### Flycheck (emacs)
+### flycheck-languagetool (emacs)
+
+See <https://github.com/emacs-languagetool/flycheck-languagetool>
 
 ```emacs-lisp
 (use-package flycheck-languagetool
@@ -72,3 +76,29 @@ $ pandoc README.md -t plain | ltapi-client
   (setq flycheck-languagetool-url "http://127.0.0.1:8875")
 )
 ```
+
+### ltex-ls (language server protocol for markup)
+
+See <https://github.com/valentjn/ltex-ls>.
+
+This currently requires [this patch](https://github.com/valentjn/ltex-ls/pull/276) to send the proper content type in the requests (this also could be done in `ltapiserv-rs` with an axum middleware to edit the content type).
+
+Use the `ltex.languageToolHttpServerUri` variable to set the URL, e.g. with [lsp-ltex](https://github.com/emacs-languagetool/lsp-ltex) in emacs:
+
+```emacs-lisp
+(use-package lsp-ltex
+  :ensure t
+  :hook (text-mode . (lambda ()
+                       (require 'lsp-ltex)
+                       (lsp)))  ; or lsp-deferred
+  :init
+  (setq lsp-ltex-version "16.0.0"
+        lsp-ltex-languagetool-http-server-uri "http://localhost:8875"
+        )
+)
+```
+
+## TODO
+
+- [ ] Dynamic editing of the dictionary (`/words` endpoint).
+- [ ] Tests
