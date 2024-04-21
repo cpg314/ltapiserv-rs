@@ -1,0 +1,23 @@
+name: "ltapiserv-rs"
+arch: "amd64"
+platform: "linux"
+version: "${CARGO_MAKE_PROJECT_VERSION}"
+release: "${RELEASE}"
+section: "default"
+priority: "extra"
+provides:
+  - ltapiserv-rs
+  - ltapi-client
+description: "Server implementation of the LanguageTool API for offline grammar and spell checking, based on nlprule and symspel. And a small graphical command-line client. "
+vendor: "cpg314"
+maintainer: "cpg314 <44120267+cpg314@users.noreply.github.com>"
+homepage: "https://github.com/cpg314/ltapiserv-rs"
+contents:
+  - src: "./target-cross/$ARCH/release/ltapiserv-rs"
+    dst: /usr/local/bin/ltapiserv-rs
+    expand: true
+  - src: "./target-cross/$ARCH/release/ltapi-client"
+    dst: /usr/local/bin/ltapi-client
+    expand: true
+  - src: "./ltapiserv-rs.service"
+    dst: /usr/lib/systemd/user/ltapiserv-rs.service

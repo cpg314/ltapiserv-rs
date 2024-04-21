@@ -11,7 +11,17 @@ See <https://c.pgdm.ch/eps-projects/ltapiserv-rs>
 
 ## Installation
 
-The recommended method is to get a binary from the [releases page](https://github.com/cpg314/ltapiserv-rs/releases) and install it as a systemd service:
+The recommended method is to get a binary from the [releases page](https://github.com/cpg314/ltapiserv-rs/releases).
+
+The `.deb` and Arch Linux packages will install a service definition in `/usr/lib/systemd/user/ltapiser-rs.service`, and it should suffice to enable it with
+
+```console
+$ systemctl --user enable --now ltapiserv-rs
+```
+
+A path to a custom dictionary can be passed to the server via the `--dictionary` option. The default `systemd` configuration places it in `~/dictionary.txt`.
+
+### tar.gz archive
 
 ```console
 $ sudo cp ltapiserv-rs /usr/local/bin
@@ -20,8 +30,6 @@ $ ln -s $(pwd)/ltapiserv-rs.service ~/.config/systemd/user/ltapiserv-rs.service
 $ systemctl --user daemon-reload && systemctl --user enable --now ltapiserv-rs
 $ systemctl --user status ltapiserv-rs
 ```
-
-A path to a custom dictionary can be passed to the server via the `--dictionary` option. The default `systemd` configuration places it in `~/dictionary.txt`.
 
 ### From source
 
