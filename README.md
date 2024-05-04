@@ -37,7 +37,7 @@ Alternatively, binaries can be built from source as follows:
 
 ```console
 $ # Create en_US.tar.gz data archive (will be embedded in the binary).
-$ bash create_archive.sh
+$ cargo make create-archive
 $ cargo build --release
 ```
 
