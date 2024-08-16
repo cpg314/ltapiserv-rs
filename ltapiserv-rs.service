@@ -6,7 +6,7 @@ StartLimitIntervalSec=0
 Type=simple
 Restart=on-failure
 RestartSec=20
-ExecStart=/usr/local/bin/ltapiserv-rs  --port 8875 --dictionary %h/dictionary.txt
+ExecStart=/usr/local/bin/ltapiserv-rs  --port 8875
 
 [Install]
 WantedBy=default.target

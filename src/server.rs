@@ -1,4 +1,4 @@
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 use std::sync::Arc;
 
 use axum::extract::{Extension, Form, Json};
@@ -9,6 +9,13 @@ use log::*;
 use ltapiserv_rs::api;
 use ltapiserv_rs::checkers::Checkers;
 
+fn dictionary() -> String {
+    dirs::data_dir()
+        .map(|d| d.join("ltapiserv-rs").join("dictionary.txt"))
+        .and_then(|d| d.to_str().map(String::from))
+        .unwrap_or_default()
+}
+
 /// Alternative API server for LanguageTool
 #[derive(Parser)]
 #[clap(version)]
@@ -16,8 +23,9 @@ struct Flags {
     /// Path to a .tar.gz data archive. If not provided, the data will be loaded from the binary.
     #[clap(long)]
     archive: Option<PathBuf>,
-    #[clap(long)]
-    dictionary: Option<PathBuf>,
+    /// Path to custom dictionary
+    #[clap(long, default_value_t = dictionary())]
+    dictionary: String,
     #[clap(long, default_value_t = 8875)]
     port: u16,
     /// Verbose logging
@@ -111,9 +119,10 @@ async fn main() -> anyhow::Result<()> {
     } else {
         Checkers::from_archive_bytes(include_bytes!("../en_US.tar.gz"))?
     };
-    if let Some(dictionary) = args.dictionary {
-        checkers.add_dictionary(&dictionary)?;
-    }
+
+    // Add dictionary
+    checkers.add_dictionary(Path::new(&args.dictionary))?;
+
     let checkers = Arc::new(checkers);
     info!(
         "Done initializing {} checkers in {:?}",

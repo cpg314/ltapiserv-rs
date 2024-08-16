@@ -3,6 +3,7 @@ use std::collections::HashSet;
 use std::fmt::Write;
 use std::path::Path;
 
+use anyhow::Context;
 use bincode::Options;
 use log::*;
 use serde::{Deserialize, Serialize};
@@ -74,12 +75,22 @@ impl Checkers {
     }
     /// Add a custom dictionary (one word per line)
     pub fn add_dictionary(&mut self, filename: &Path) -> anyhow::Result<()> {
-        self.custom_dictionary.extend(
-            std::fs::read_to_string(filename)?
-                .lines()
-                .flat_map(|l| l.split_ascii_whitespace())
-                .map(str::to_ascii_lowercase),
-        );
+        std::fs::create_dir_all(
+            filename
+                .parent()
+                .context("Invalid dictionary path (should be a filename)")?,
+        )?;
+        if !filename.is_file() {
+            std::fs::write(filename, "")
+                .with_context(|| format!("Failed to initialize dictionary at {:?}", filename))?;
+        } else {
+            self.custom_dictionary.extend(
+                std::fs::read_to_string(filename)?
+                    .lines()
+                    .flat_map(|l| l.split_ascii_whitespace())
+                    .map(str::to_ascii_lowercase),
+            );
+        }
         info!(
             "Added dictionary {:?}, currently {} custom words",
             filename,
@@ -126,6 +137,7 @@ impl Checkers {
             .join(env!("CARGO_PKG_NAME"));
         std::fs::create_dir_all(&cache)?;
         let cache = cache.join(hash.as_str());
+        info!("Data path is {:?}", cache);
 
         if cache.exists() {
             debug!("Reading from cache at {}", cache.display());
