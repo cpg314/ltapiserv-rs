@@ -50,8 +50,8 @@ impl IntoResponse for Error {
 
 /// Main endpoint.
 async fn check(
-    Form(request): Form<api::Request>,
     Extension(checkers): Extension<Arc<Checkers>>,
+    Form(request): Form<api::Request>,
 ) -> Result<Json<api::Response>, Error> {
     let start = std::time::Instant::now();
     info!("Received query");
@@ -75,7 +75,8 @@ async fn check(
 
     let elapsed_ms = start.elapsed().as_millis();
     info!(
-        "Served query in {} ms ({:.1} chars/s) with {} suggestions",
+        "Served query with {} chars in {} ms ({:.1} chars/s) with {} suggestions",
+        text_length,
         elapsed_ms,
         text_length as f32 / (elapsed_ms as f32 / 1000.0),
         resp.matches.len()
@@ -85,31 +86,23 @@ async fn check(
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
+    if let Err(err) = main_impl().await {
+        error!("{}", err);
+        std::process::exit(1);
+    }
+    Ok(())
+}
+
+async fn main_impl() -> anyhow::Result<()> {
     let args = Flags::parse();
-    // Setup logging
-    let colors = fern::colors::ColoredLevelConfig::new()
-        .debug(fern::colors::Color::Blue)
-        .info(fern::colors::Color::Green)
-        .error(fern::colors::Color::Red)
-        .warn(fern::colors::Color::Yellow);
-    fern::Dispatch::new()
-        .format(move |out, message, record| {
-            out.finish(format_args!(
-                "{} {} [{}] {}",
-                chrono::Local::now().format("[%Y-%m-%d %H:%M:%S]"),
-                colors.color(record.level()),
-                record.target(),
-                message,
-            ))
-        })
-        .level(if args.debug {
-            log::LevelFilter::Debug
-        } else {
-            log::LevelFilter::Info
-        })
-        .level_for("nlprule", log::LevelFilter::Error)
-        .chain(std::io::stdout())
-        .apply()?;
+
+    env_logger::Builder::from_env(env_logger::Env::default().default_filter_or(if args.debug {
+        "debug"
+    } else {
+        "info"
+    }))
+    .filter_module("nlprule", LevelFilter::Error)
+    .init();
 
     // Setup checkers
     let start = std::time::Instant::now();
@@ -141,9 +134,8 @@ async fn main() -> anyhow::Result<()> {
         args.port,
     );
     info!("Serving on http://{}", addr);
-    axum::Server::bind(&addr)
-        .serve(app.into_make_service())
-        .await?;
+    let listener = tokio::net::TcpListener::bind(addr).await?;
+    axum::serve(listener, app.into_make_service()).await?;
 
     Ok(())
 }

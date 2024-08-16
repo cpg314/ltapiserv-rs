@@ -2,6 +2,7 @@ use std::path::PathBuf;
 
 use ariadne::{Color, Label, Report, ReportKind, Source};
 use clap::Parser;
+use log::*;
 
 use ltapiserv_rs::api::{Request, Response};
 
@@ -22,18 +23,29 @@ struct Flags {
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
+    if let Err(err) = main_impl().await {
+        error!("{}", err);
+        std::process::exit(1);
+    }
+    Ok(())
+}
+async fn main_impl() -> anyhow::Result<()> {
     let args = Flags::parse();
+
+    env_logger::Builder::from_env(env_logger::Env::default().default_filter_or("info"))
+        .filter_module("nlprule", LevelFilter::Error)
+        .init();
 
     let text = if let Some(filename) = &args.filename {
         std::fs::read_to_string(filename)?
     } else {
-        eprintln!("Reading from stdin",);
+        info!("Reading from stdin",);
         std::io::read_to_string(std::io::stdin())?
     };
 
     // Request and read results
     let endpoint = args.server.join("v2/check")?;
-    eprintln!("Sending request to {}", endpoint);
+    info!("Sending request to {}", endpoint);
     let start = std::time::Instant::now();
     let client = reqwest::Client::new();
     let request = Request::new(text.clone(), &args.language);
@@ -45,7 +57,7 @@ async fn main() -> anyhow::Result<()> {
         .error_for_status()?
         .json()
         .await?;
-    eprintln!("Received response in {:?}", start.elapsed());
+    info!("Received response in {:?}", start.elapsed());
 
     if args.json {
         println!("{}", serde_json::to_string_pretty(&resp)?);
@@ -58,7 +70,7 @@ async fn main() -> anyhow::Result<()> {
         let mut report = Report::build(ReportKind::Error, &filename, 0)
             .with_config(ariadne::Config::default().with_compact(true));
         if resp.matches.is_empty() {
-            eprintln!("No errors found");
+            info!("No errors found");
             return Ok(());
         }
         for m in &resp.matches {
