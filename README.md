@@ -90,15 +90,6 @@ $ systemctl --user daemon-reload && systemctl --user enable --now ltapiserv-rs
 $ systemctl --user status ltapiserv-rs
 ```
 
-### From source
-
-Alternatively, binaries can be built from source as follows:
-
-```console
-$ # Create en_US.tar.gz data archive (will be embedded in the binary).
-$ cargo make create-archive
-$ cargo build --release
-```
 
 ## Usage / clients
 
@@ -112,7 +103,7 @@ Install the official LanguageTool browser extension (e.g. for [Chrome](https://l
 
 ### Command line client
 
-A command line client, `ltapi-client`, is also included in this codebase.
+A command line client, `ltapi-client`, is also included in this project.
 
 ```console
 $ cat text.txt | ltapi-client --server http://localhost:8875
@@ -234,6 +225,14 @@ pub fn suggest(&self, text: &str) -> Vec<api::Match> {
 The `Match::from` method performs conversion between an [`nlprule::Suggestion`](https://docs.rs/nlprule/0.6.4/nlprule/types/struct.Suggestion.html) to a `Match`, essentially copying over the span and the message.
 
 The `nlprule` crate does not yet support [spell checking](https://github.com/bminixhofer/nlprule/issues/2), but we can add a basic version using the [`symspell`](https://crates.io/crates/symspell) crate and leveraging the tokenization we already have from `nlprule`. Similarly, the tokenization allows us to implement a word repetition rule that did not seem present in `nlprule`.
+
+## Compile from source
+
+Binaries can also be built from source as follows:
+
+```console
+$ cargo make build
+```
 
 ## Future work
 

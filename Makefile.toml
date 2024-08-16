@@ -1,9 +1,14 @@
 extend = "common.toml"
 
 [config]
-load_script = "wget -nc https://raw.githubusercontent.com/cpg314/cargo-make-template/v0.1.0/common.toml"
+load_script = "wget -nc https://raw.githubusercontent.com/cpg314/cargo-make-template/v0.1.1/common.toml"
+
+
+[tasks.cross]
+dependencies = ["create-archive"]
 
 [tasks.create-archive]
+condition = { files_not_exist = ["./en_US"] }
 script='''
 set -exuo pipefail
 mkdir en_US
