@@ -31,6 +31,8 @@ struct Flags {
     /// Verbose logging
     #[clap(long, short)]
     debug: bool,
+    #[clap(long, default_value_t = 50_000)]
+    max_query_size: usize,
 }
 
 #[derive(thiserror::Error, Debug)]
@@ -39,6 +41,8 @@ pub enum Error {
     UnsupportedLanguage { supports: String, request: String },
     #[error("Missing text in request: {0:?}")]
     MissingAnnotations(anyhow::Error),
+    #[error("Query too large ({0} > {1})")]
+    QueryTooLarge(usize, usize),
 }
 
 impl IntoResponse for Error {
@@ -51,6 +55,7 @@ impl IntoResponse for Error {
 /// Main endpoint.
 async fn check(
     Extension(checkers): Extension<Arc<Checkers>>,
+    Extension(args): Extension<Arc<Flags>>,
     Form(request): Form<api::Request>,
 ) -> Result<Json<api::Response>, Error> {
     let start = std::time::Instant::now();
@@ -64,6 +69,9 @@ async fn check(
     }
     let annotations = request.annotations().map_err(Error::MissingAnnotations)?;
     let text_length = annotations.text_len();
+    if text_length > args.max_query_size {
+        return Err(Error::QueryTooLarge(text_length, args.max_query_size));
+    }
 
     // Process in a task
     let resp: api::Response = tokio::task::spawn_blocking(move || api::Response {
@@ -107,8 +115,8 @@ async fn main_impl() -> anyhow::Result<()> {
     // Setup checkers
     let start = std::time::Instant::now();
     info!("Initializing...");
-    let mut checkers = if let Some(archive) = args.archive {
-        Checkers::from_archive(&archive)?
+    let mut checkers = if let Some(archive) = &args.archive {
+        Checkers::from_archive(archive)?
     } else {
         Checkers::from_archive_bytes(include_bytes!("../en_US.tar.gz"))?
     };
@@ -124,15 +132,16 @@ async fn main_impl() -> anyhow::Result<()> {
     );
 
     // Setup Axum
-    let app = axum::Router::new()
-        .route("/check", axum::routing::post(check))
-        .route("/v2/check", axum::routing::post(check))
-        .layer(tower_http::cors::CorsLayer::new().allow_origin(tower_http::cors::Any))
-        .layer(axum::extract::Extension(checkers));
     let addr = std::net::SocketAddr::new(
         std::net::IpAddr::V4(std::net::Ipv4Addr::new(0, 0, 0, 0)),
         args.port,
     );
+    let app = axum::Router::new()
+        .route("/check", axum::routing::post(check))
+        .route("/v2/check", axum::routing::post(check))
+        .layer(tower_http::cors::CorsLayer::new().allow_origin(tower_http::cors::Any))
+        .layer(axum::extract::Extension(checkers))
+        .layer(axum::extract::Extension(Arc::new(args)));
     info!("Serving on http://{}", addr);
     let listener = tokio::net::TcpListener::bind(addr).await?;
     axum::serve(listener, app.into_make_service()).await?;
