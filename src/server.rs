@@ -11,14 +11,16 @@ use ltapiserv_rs::checkers::Checkers;
 
 /// Alternative API server for LanguageTool
 #[derive(Parser)]
+#[clap(version)]
 struct Flags {
-    // Path to a .tar.gz data archive. If not provided, the data will be loaded from the binary.
+    /// Path to a .tar.gz data archive. If not provided, the data will be loaded from the binary.
     #[clap(long)]
     archive: Option<PathBuf>,
     #[clap(long)]
     dictionary: Option<PathBuf>,
     #[clap(long, default_value_t = 8875)]
     port: u16,
+    /// Verbose logging
     #[clap(long, short)]
     debug: bool,
 }
@@ -114,7 +116,7 @@ async fn main() -> anyhow::Result<()> {
     }
     let checkers = Arc::new(checkers);
     info!(
-        "Done initializing {} checkers in in {:?}",
+        "Done initializing {} checkers in {:?}",
         checkers.language,
         start.elapsed()
     );
