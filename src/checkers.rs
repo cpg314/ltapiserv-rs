@@ -73,6 +73,10 @@ impl Checkers {
             language,
         })
     }
+    pub fn clear_dictionary(&mut self) {
+        info!("Clearing custom dictionary");
+        self.custom_dictionary.clear();
+    }
     /// Add a custom dictionary (one word per line)
     pub fn add_dictionary(&mut self, filename: &Path) -> anyhow::Result<()> {
         std::fs::create_dir_all(

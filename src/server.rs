@@ -5,6 +5,7 @@ use axum::extract::{Extension, Form, Json};
 use axum::response::IntoResponse;
 use clap::Parser;
 use log::*;
+use tokio::sync::RwLock;
 
 use ltapiserv_rs::api;
 use ltapiserv_rs::checkers::Checkers;
@@ -52,15 +53,18 @@ impl IntoResponse for Error {
     }
 }
 
+type CheckersExt = Extension<Arc<RwLock<Checkers>>>;
+
 /// Main endpoint.
 async fn check(
-    Extension(checkers): Extension<Arc<Checkers>>,
+    Extension(checkers): CheckersExt,
     Extension(args): Extension<Arc<Flags>>,
     Form(request): Form<api::Request>,
 ) -> Result<Json<api::Response>, Error> {
     let start = std::time::Instant::now();
     info!("Received query");
     debug!("Query {:#?}", request);
+    let checkers = checkers.read_owned().await;
     if request.language() != checkers.language {
         return Err(Error::UnsupportedLanguage {
             request: request.language().to_string(),
@@ -124,12 +128,12 @@ async fn main_impl() -> anyhow::Result<()> {
     // Add dictionary
     checkers.add_dictionary(Path::new(&args.dictionary))?;
 
-    let checkers = Arc::new(checkers);
     info!(
         "Done initializing {} checkers in {:?}",
         checkers.language,
         start.elapsed()
     );
+    let checkers = Arc::new(RwLock::new(checkers));
 
     // Setup Axum
     let addr = std::net::SocketAddr::new(
