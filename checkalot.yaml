@@ -1,0 +1,42 @@
+checks:
+  - type: version
+    version: ">=0.1.6"
+
+  - type: command
+    name: group-imports
+    command: cargo group-imports
+    version: ">=0.1.3"
+    version_command: cargo group-imports --version
+    fix_command: cargo group-imports --fix
+
+  - type: command
+    name: machete
+    command: cargo-machete .
+    fix_command:
+      command: cargo-machete . --fix
+      success_statuses:
+        - 0
+        - 1
+
+  - type: command
+    name: fmt
+    command: cargo fmt --all -- --check
+    fix_command: cargo fmt --all
+
+  - type: command
+    name: clippy
+    command: cargo clippy --color always --release --workspace --no-deps --benches --tests --all-features -- -D warnings
+    fix_command: cargo clippy --color always --release --workspace --no-deps --benches --tests --all-features --fix --allow-dirty --allow-staged -- -D warnings
+
+  - type: command
+    name: tests
+    command: cargo nextest run -r
+
+  - type: command
+    name: doctest
+    command: cargo test --doc --workspace -r
+
+  - type: command
+    name: typos
+    command: typos src README.md
+    fix_command: typos -w src README.md

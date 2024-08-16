@@ -25,8 +25,8 @@ struct Flags {
 
 #[derive(thiserror::Error, Debug)]
 pub enum Error {
-    #[error("Unsuported language (supports {supports}, got {request})")]
-    UnsuportedLanguage { supports: String, request: String },
+    #[error("Unsupported language (supports {supports}, got {request})")]
+    UnsupportedLanguage { supports: String, request: String },
     #[error("Missing text in request: {0:?}")]
     MissingAnnotations(anyhow::Error),
 }
@@ -47,7 +47,7 @@ async fn check(
     info!("Received query");
     debug!("Query {:#?}", request);
     if request.language() != checkers.language {
-        return Err(Error::UnsuportedLanguage {
+        return Err(Error::UnsupportedLanguage {
             request: request.language().to_string(),
             supports: checkers.language.to_string(),
         });
