@@ -7,7 +7,8 @@ This provides a **lightweight alternative backend implementation** of the Langua
 
 ## Quick start
 
-See [Installation](#installation). The server is a single binary with no dependencies, which can be run as a systemd service. Debian/Ubuntu and Arch packages are provided.
+1. [Install the server](#installation), which is a single binary with no dependencies, which can be run as a systemd service. Debian/Ubuntu and Arch packages are provided. Alternatively, a Docker image is available.
+2. [Configure your client](#usage-clients) to use the local server.
 
 ## Screenshots
 
@@ -70,17 +71,32 @@ With only a paragraph (to simulate something close to the normal use of Language
 
 ## Installation
 
-The recommended method is to get a binary from the [releases page](https://github.com/cpg314/ltapiserv-rs/releases).
+Any of the following methods will make a server available at http://localhost:8875
 
-The `.deb` and Arch Linux packages will install a service definition in `/usr/lib/systemd/user/ltapiser-rs.service`, and it should suffice to enable it with
+By default, the custom dictionary is located in `~/.local/share/ltapiserv-rs/dictionary.txt`. A different path can be passed via the `--dictionary` option.
+
+### Docker
+
+```console
+$ docker run -d --name ltapiserv-rs -p 8875:8875 -v ~/.local/share/ltapiserv-rs:/data ghcr.io/cpg314/ltapiserv-rs:0.2.2
+$ docker logs -f ltapiserv-rs
+```
+
+### Debian/Ubuntu and Arch packages
+
+Packages are available from the [releases page](https://github.com/cpg314/ltapiserv-rs/releases), containing the server and `ltapi-client`. They will install a `systemd` service definition in `/usr/lib/systemd/user/ltapiserv-rs.service`, which can be enabled with:
 
 ```console
 $ systemctl --user enable --now ltapiserv-rs
+$ # Check status
+$ systemctl --user status ltapiserv-rs
+$ # Check logs
+$ journalctl --user -u ltapiserv-rs -f
 ```
 
-A path to a custom dictionary can be passed to the server via the `--dictionary` option. The default `systemd` configuration places it in `~/dictionary.txt`.
-
 ### tar.gz archive
+
+For other distributions, standalone binaries are also available from the [releases page](https://github.com/cpg314/ltapiserv-rs/releases).
 
 ```console
 $ sudo cp ltapiserv-rs /usr/local/bin
@@ -90,6 +106,7 @@ $ systemctl --user daemon-reload && systemctl --user enable --now ltapiserv-rs
 $ systemctl --user status ltapiserv-rs
 ```
 
+See the above remark about the custom dictionary.
 
 ## Usage / clients
 
