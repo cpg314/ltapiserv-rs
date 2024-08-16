@@ -15,6 +15,9 @@ struct Flags {
     /// Server base URL (e.g. http://localhost:8875)
     #[clap(long, short, env = "LTAPI_SERVER")]
     server: reqwest::Url,
+    /// JSON output
+    #[clap(long)]
+    json: bool,
 }
 
 #[tokio::main]
@@ -31,6 +34,7 @@ async fn main() -> anyhow::Result<()> {
     // Request and read results
     let endpoint = args.server.join("v2/check")?;
     eprintln!("Sending request to {}", endpoint);
+    let start = std::time::Instant::now();
     let client = reqwest::Client::new();
     let request = Request::new(text.clone(), &args.language);
     let resp: Response = client
@@ -41,29 +45,35 @@ async fn main() -> anyhow::Result<()> {
         .error_for_status()?
         .json()
         .await?;
+    eprintln!("Received response in {:?}", start.elapsed());
 
-    // Report errors
-    let filename = args
-        .filename
-        .map(|f| f.to_string_lossy().into_owned())
-        .unwrap_or("stdin".to_string());
-    let mut report = Report::build(ReportKind::Error, &filename, 0);
-    if resp.matches.is_empty() {
-        eprintln!("No errors found");
-        return Ok(());
+    if args.json {
+        println!("{}", serde_json::to_string_pretty(&resp)?);
+    } else {
+        // Report errors
+        let filename = args
+            .filename
+            .map(|f| f.to_string_lossy().into_owned())
+            .unwrap_or("stdin".to_string());
+        let mut report = Report::build(ReportKind::Error, &filename, 0)
+            .with_config(ariadne::Config::default().with_compact(true));
+        if resp.matches.is_empty() {
+            eprintln!("No errors found");
+            return Ok(());
+        }
+        for m in &resp.matches {
+            report = report.with_label(
+                Label::new((&filename, m.offset..m.offset + m.length))
+                    .with_message(&m.message)
+                    .with_color(if m.rule.is_spelling() {
+                        Color::Green
+                    } else {
+                        Color::Red
+                    }),
+            );
+        }
+        report.finish().print((&filename, Source::from(text)))?;
     }
-    for m in &resp.matches {
-        report = report.with_label(
-            Label::new((&filename, m.offset..m.offset + m.length))
-                .with_message(&m.message)
-                .with_color(if m.rule.is_spelling() {
-                    Color::Green
-                } else {
-                    Color::Red
-                }),
-        );
-    }
-    report.finish().print((&filename, Source::from(text)))?;
     if !resp.matches.is_empty() {
         std::process::exit(1);
     }
