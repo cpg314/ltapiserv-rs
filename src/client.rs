@@ -86,6 +86,7 @@ async fn main_impl() -> anyhow::Result<()> {
         }
         report.finish().print((&filename, Source::from(text)))?;
     }
+    info!("Found {} potential errors", resp.matches.len());
     if !resp.matches.is_empty() {
         std::process::exit(1);
     }

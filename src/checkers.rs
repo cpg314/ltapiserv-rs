@@ -74,11 +74,12 @@ impl Checkers {
         })
     }
     pub fn clear_dictionary(&mut self) {
-        info!("Clearing custom dictionary");
+        debug!("Clearing custom dictionary");
         self.custom_dictionary.clear();
     }
     /// Add a custom dictionary (one word per line)
-    pub fn add_dictionary(&mut self, filename: &Path) -> anyhow::Result<()> {
+    pub fn add_dictionary(&mut self, filename: impl AsRef<Path>) -> anyhow::Result<()> {
+        let filename = filename.as_ref();
         std::fs::create_dir_all(
             filename
                 .parent()
@@ -189,9 +190,8 @@ impl Checkers {
                     .map(|s| suggestion_to_match(s, annotations))
                     .filter(api::Match::filter),
             );
-            // Repetitions
-            let tokens = sentence.tokens();
             // Spelling and repetitions, processing the sentence token by token.
+            let tokens = sentence.tokens();
             for (i, token) in tokens.iter().enumerate() {
                 let word = token.word();
                 let word_str = unidecode::unidecode(word.as_str());

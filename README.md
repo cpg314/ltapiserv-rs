@@ -73,7 +73,7 @@ With only a paragraph (to simulate something close to the normal use of Language
 
 Any of the following methods will make a server available at http://localhost:8875
 
-By default, the custom dictionary is located in `~/.local/share/ltapiserv-rs/dictionary.txt`. A different path can be passed via the `--dictionary` option.
+By default, the custom dictionary is located in `~/.local/share/ltapiserv-rs/dictionary.txt`. A different path can be passed via the `--dictionary` option. The contents are automatically reloaded on file change.
 
 ### Docker
 

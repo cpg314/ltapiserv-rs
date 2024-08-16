@@ -135,6 +135,28 @@ async fn main_impl() -> anyhow::Result<()> {
     );
     let checkers = Arc::new(RwLock::new(checkers));
 
+    // Dictionary reloading task
+    let checkers2 = checkers.clone();
+    let dictionary = PathBuf::from(&args.dictionary);
+    let (tx, rx) = std::sync::mpsc::channel();
+    let mut debouncer =
+        notify_debouncer_mini::new_debouncer(std::time::Duration::from_millis(500), tx)?;
+    debouncer.watcher().watch(
+        &dictionary,
+        notify_debouncer_mini::notify::RecursiveMode::NonRecursive,
+    )?;
+    tokio::task::spawn(async move {
+        loop {
+            rx.recv().unwrap().unwrap();
+            info!("Reloading dictionary (file changed on disk)");
+            let mut checkers = checkers2.write().await;
+            checkers.clear_dictionary();
+            if let Err(e) = checkers.add_dictionary(&dictionary) {
+                error!("Failed reloading dictionary: {}", e);
+            }
+        }
+    });
+
     // Setup Axum
     let addr = std::net::SocketAddr::new(
         std::net::IpAddr::V4(std::net::Ipv4Addr::new(0, 0, 0, 0)),

@@ -36,6 +36,7 @@ tower-http = {version = "0.5.2", features = ["cors"]}
 unidecode = "0.3.0"
 reqwest = { version = "0.11.18", optional = true, features = ["json", "rustls"], default-features = false }
 env_logger = "0.11.5"
+notify-debouncer-mini = "0.4.1"
 
 [features]
 default = ["client"]
