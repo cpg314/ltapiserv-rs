@@ -146,10 +146,12 @@ See <https://github.com/emacs-languagetool/flycheck-languagetool>
 ```emacs-lisp
 (use-package flycheck-languagetool
   :ensure t
-  :hook (text-mode . flycheck-languagetool-setup)
+  :hook ((text-mode gfm-mode markdown-mode) . flycheck-languagetool-setup)
   :init
   (setq flycheck-languagetool-url "http://127.0.0.1:8875")
-)
+  :custom
+  (flycheck-languagetool-active-modes '(text-mode gfm-mode markdown-mode))
+  )
 ```
 
 ### ltex-ls (language server protocol for markup)
