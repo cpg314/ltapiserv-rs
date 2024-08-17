@@ -245,7 +245,7 @@ impl Checkers {
                     debug!("Spelling: '{}' -> {:?}", word_str, results);
                     let mut message = "Possible spelling mistake.".to_string();
                     if let Some(result) = results.first() {
-                        write!(message, " Did you mean {}?", result.term).unwrap();
+                        write!(message, " Did you mean '{}'?", result.term).unwrap();
                     }
                     // TODO: Restore case
                     let (start, end) = annotations

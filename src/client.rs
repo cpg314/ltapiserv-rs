@@ -1,7 +1,7 @@
 use std::path::PathBuf;
 
-use ariadne::{Color, Label, Report, ReportKind, Source};
 use clap::Parser;
+use itertools::Itertools;
 use log::*;
 
 use ltapiserv_rs::api::{Request, Response};
@@ -19,6 +19,9 @@ struct Flags {
     /// JSON output
     #[clap(long)]
     json: bool,
+    /// Number of suggestions to display
+    #[clap(long, default_value_t = 3)]
+    suggestions: usize,
 }
 
 #[tokio::main]
@@ -59,35 +62,44 @@ async fn main_impl() -> anyhow::Result<()> {
         .await?;
     info!("Received response in {:?}", start.elapsed());
 
+    let n_errors = resp.matches.len();
     if args.json {
         println!("{}", serde_json::to_string_pretty(&resp)?);
     } else {
         // Report errors
-        let filename = args
-            .filename
-            .map(|f| f.to_string_lossy().into_owned())
-            .unwrap_or("stdin".to_string());
-        let mut report = Report::build(ReportKind::Error, &filename, 0)
-            .with_config(ariadne::Config::default().with_compact(true));
         if resp.matches.is_empty() {
             info!("No errors found");
             return Ok(());
         }
-        for m in &resp.matches {
-            report = report.with_label(
-                Label::new((&filename, m.offset..m.offset + m.length))
-                    .with_message(&m.message)
-                    .with_color(if m.rule.is_spelling() {
-                        Color::Green
-                    } else {
-                        Color::Red
-                    }),
-            );
+        let text = std::sync::Arc::new(text);
+        for m in resp.matches {
+            // Get the byte offsets for miette
+            let start = text.char_indices().nth(m.offset).unwrap().0;
+            let end = text.char_indices().nth(m.offset + m.length).unwrap().0;
+            let report = miette::miette!(
+                severity = if m.rule.is_spelling() {
+                    miette::Severity::Warning
+                } else {
+                    miette::Severity::Advice
+                },
+                labels = vec![miette::LabeledSpan::at(
+                    start..end,
+                    m.replacements
+                        .into_iter()
+                        .take(args.suggestions)
+                        .map(|r| r.value)
+                        .join(" / ")
+                ),],
+                // code = m.rule.id,
+                "{}",
+                m.message,
+            )
+            .with_source_code(text.clone());
+            println!("{:?}", report);
         }
-        report.finish().print((&filename, Source::from(text)))?;
     }
-    info!("Found {} potential errors", resp.matches.len());
-    if !resp.matches.is_empty() {
+    info!("Found {} potential errors", n_errors);
+    if n_errors > 0 {
         std::process::exit(1);
     }
 

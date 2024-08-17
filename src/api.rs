@@ -249,7 +249,7 @@ pub struct RuleCategory {
 #[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct Rule {
-    id: String,
+    pub id: String,
     sub_id: usize,
     description: String,
     issue_type: String,
@@ -293,7 +293,7 @@ impl Rule {
 #[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct Replacement {
-    value: String,
+    pub value: String,
     short_description: Option<String>,
 }
 impl From<&nlprule::types::Token<'_>> for Replacement {

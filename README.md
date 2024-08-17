@@ -15,7 +15,7 @@ This provides a **lightweight alternative backend implementation** of the Langua
 ![Illustration](doc/illustration.png) \
 _Using the `ltapiserv-rs` server with the official LanguageTool browser extension._
 
-A simple command-line client is also provided, displaying results graphically with [ariadne](https://docs.rs/ariadne/latest/ariadne/index.html):
+A simple command-line client is also provided, displaying results graphically with [miette](https://docs.rs/miette/latest/miette/):
 
 ![Command line interface](doc/client.png)
 
