@@ -57,7 +57,6 @@ pub enum AnnotationElement {
     },
     Markup {
         markup: String,
-
         // Interpret the markup as this string for analysis.
         // E.g. "\n\n" when `markup` is `<p>`
         interpret_as: Option<String>,
@@ -220,6 +219,7 @@ pub struct Response {
     pub language: LanguageResponse,
 }
 #[derive(Serialize, Deserialize, Debug)]
+#[serde(rename_all = "camelCase")]
 pub struct LanguageResponse {
     #[serde(flatten)]
     language: Language,

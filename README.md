@@ -112,7 +112,7 @@ See the above remark about the custom dictionary.
 
 The following clients have been tested. The server should be compatible with others, but there might be idiosyncrasies; don't hesitate to send a PR.
 
-### Browser extension
+### Browser extensions
 
 Install the official LanguageTool browser extension (e.g. for [Chrome](https://languagetool.org/chrome) or [Firefox](https://languagetool.org/firefox)) and configure it to use your local server:
 
@@ -174,6 +174,15 @@ Use the `ltex.languageToolHttpServerUri` variable to set the URL, e.g. with [lsp
         )
 )
 ```
+
+### Tools based on `languagetools-rust`
+
+Unfortunately, tools such as [cargo-languagetool](https://github.com/rnbguy/cargo-languagetool/) and [languagetool-code-comments](https://github.com/dustinblackman/languagetool-code-comments), based on the [languagetool-rust](https://github.com/jeertmans/languagetool-rust) client, are for now not compatible with this server. There are two reasons:
+
+- The queries are sent as URL parameters rather than as form data. Even though the former matches the [API specifications](https://languagetool.org/http-api/swagger-ui/#!/default/post_check), the latter is also supported by the official server.
+- The client expect all fields to be contained in the response, while we only send a subset.
+
+The solution to the first issue is simple (support query parameters depending on the `Content-Type` header and/or request contents). For the second, one should either expand the messages defined here, or replace them by the `languagetools-rust` ones (which might cause serialization issues in the `form-data` path), or add conversions.
 
 ## Implementation details
 
@@ -264,7 +273,6 @@ $ cargo make build
   It would be interesting to understand what the state of the art is (under a fast processing constraint).
 
 - Support more languages. German is already supported in `nlprule`, but adding more languages is actually non-trivial because of language-specific assumptions, see [this issue](https://github.com/bminixhofer/nlprule/issues/46) and [this one](https://github.com/bminixhofer/nlprule/issues/14).
-- Support addition and deletion of words to the dictionary. This is pretty simple and corresponds to the `/words/add` and `/words/delete` API endpoints.  
-   Currently, the server allows passing the path to a custom dictionary at startup.
+- Support addition and deletion of words to the dictionary. This is pretty simple and corresponds to the `/words/add` and `/words/delete` API endpoints. However, the browser extension seems to store the dictionary locally, unless one logs in to LanguageTool Premium.
 - Reduce the number of false positives of the spellchecker.
 - Add unit and integration tests
