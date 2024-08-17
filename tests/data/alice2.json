@@ -1,0 +1,1670 @@
+[
+  {
+    "message": "Possible spelling mistake. Did you mean 'very'?",
+    "shortMessage": "",
+    "offset": 72,
+    "length": 5,
+    "replacements": [
+      {
+        "value": "very",
+        "shortDescription": null
+      },
+      {
+        "value": "kerry",
+        "shortDescription": null
+      },
+      {
+        "value": "terry",
+        "shortDescription": null
+      },
+      {
+        "value": "jerry",
+        "shortDescription": null
+      },
+      {
+        "value": "perry",
+        "shortDescription": null
+      }
+    ],
+    "sentence": "",
+    "contextForSureMatch": 0,
+    "ignoreForIncompleteSentence": false,
+    "type": {
+      "typeName": ""
+    },
+    "rule": {
+      "id": "MORFOLOGIK_RULE",
+      "subId": 0,
+      "description": "",
+      "issueType": "",
+      "urls": null,
+      "category": {
+        "id": "",
+        "name": ""
+      },
+      "isPremium": false
+    }
+  },
+  {
+    "message": "Interjections are usually punctuated.",
+    "shortMessage": "",
+    "offset": 142,
+    "length": 2,
+    "replacements": [
+      {
+        "value": "Oh,",
+        "shortDescription": null
+      },
+      {
+        "value": "Oh!",
+        "shortDescription": null
+      },
+      {
+        "value": "Oh?",
+        "shortDescription": null
+      },
+      {
+        "value": "Oh.",
+        "shortDescription": null
+      }
+    ],
+    "sentence": "",
+    "contextForSureMatch": 0,
+    "ignoreForIncompleteSentence": false,
+    "type": {
+      "typeName": ""
+    },
+    "rule": {
+      "id": "PUNCTUATION/INTERJECTIONS_PUNCTUATION/0",
+      "subId": 0,
+      "description": "",
+      "issueType": "",
+      "urls": null,
+      "category": {
+        "id": "",
+        "name": ""
+      },
+      "isPremium": false
+    }
+  },
+  {
+    "message": "Did you mean either?",
+    "shortMessage": "",
+    "offset": 521,
+    "length": 5,
+    "replacements": [
+      {
+        "value": "either",
+        "shortDescription": null
+      }
+    ],
+    "sentence": "",
+    "contextForSureMatch": 0,
+    "ignoreForIncompleteSentence": false,
+    "type": {
+      "typeName": ""
+    },
+    "rule": {
+      "id": "CONFUSED_WORDS/ETHER_EITHER/0",
+      "subId": 0,
+      "description": "",
+      "issueType": "",
+      "urls": null,
+      "category": {
+        "id": "",
+        "name": ""
+      },
+      "isPremium": false
+    }
+  },
+  {
+    "message": "Possible spelling mistake. Did you mean 'thought'?",
+    "shortMessage": "",
+    "offset": 179,
+    "length": 7,
+    "replacements": [
+      {
+        "value": "thought",
+        "shortDescription": null
+      },
+      {
+        "value": "taught",
+        "shortDescription": null
+      }
+    ],
+    "sentence": "",
+    "contextForSureMatch": 0,
+    "ignoreForIncompleteSentence": false,
+    "type": {
+      "typeName": ""
+    },
+    "rule": {
+      "id": "MORFOLOGIK_RULE",
+      "subId": 0,
+      "description": "",
+      "issueType": "",
+      "urls": null,
+      "category": {
+        "id": "",
+        "name": ""
+      },
+      "isPremium": false
+    }
+  },
+  {
+    "message": "Possible spelling mistake. Did you mean 'occurred'?",
+    "shortMessage": "",
+    "offset": 210,
+    "length": 7,
+    "replacements": [
+      {
+        "value": "occurred",
+        "shortDescription": null
+      }
+    ],
+    "sentence": "",
+    "contextForSureMatch": 0,
+    "ignoreForIncompleteSentence": false,
+    "type": {
+      "typeName": ""
+    },
+    "rule": {
+      "id": "MORFOLOGIK_RULE",
+      "subId": 0,
+      "description": "",
+      "issueType": "",
+      "urls": null,
+      "category": {
+        "id": "",
+        "name": ""
+      },
+      "isPremium": false
+    }
+  },
+  {
+    "message": "Possible spelling mistake. Did you mean 'wonder'?",
+    "shortMessage": "",
+    "offset": 248,
+    "length": 7,
+    "replacements": [
+      {
+        "value": "wonder",
+        "shortDescription": null
+      },
+      {
+        "value": "wonders",
+        "shortDescription": null
+      },
+      {
+        "value": "wondered",
+        "shortDescription": null
+      }
+    ],
+    "sentence": "",
+    "contextForSureMatch": 0,
+    "ignoreForIncompleteSentence": false,
+    "type": {
+      "typeName": ""
+    },
+    "rule": {
+      "id": "MORFOLOGIK_RULE",
+      "subId": 0,
+      "description": "",
+      "issueType": "",
+      "urls": null,
+      "category": {
+        "id": "",
+        "name": ""
+      },
+      "isPremium": false
+    }
+  },
+  {
+    "message": "Possible spelling mistake. Did you mean 'actually'?",
+    "shortMessage": "",
+    "offset": 331,
+    "length": 7,
+    "replacements": [
+      {
+        "value": "actually",
+        "shortDescription": null
+      },
+      {
+        "value": "actual",
+        "shortDescription": null
+      },
+      {
+        "value": "actuary",
+        "shortDescription": null
+      }
+    ],
+    "sentence": "",
+    "contextForSureMatch": 0,
+    "ignoreForIncompleteSentence": false,
+    "type": {
+      "typeName": ""
+    },
+    "rule": {
+      "id": "MORFOLOGIK_RULE",
+      "subId": 0,
+      "description": "",
+      "issueType": "",
+      "urls": null,
+      "category": {
+        "id": "",
+        "name": ""
+      },
+      "isPremium": false
+    }
+  },
+  {
+    "message": "Possible spelling mistake. Did you mean 'each'?",
+    "shortMessage": "",
+    "offset": 346,
+    "length": 4,
+    "replacements": [
+      {
+        "value": "each",
+        "shortDescription": null
+      },
+      {
+        "value": "watch",
+        "shortDescription": null
+      },
+      {
+        "value": "wash",
+        "shortDescription": null
+      },
+      {
+        "value": "bach",
+        "shortDescription": null
+      },
+      {
+        "value": "mach",
+        "shortDescription": null
+      }
+    ],
+    "sentence": "",
+    "contextForSureMatch": 0,
+    "ignoreForIncompleteSentence": false,
+    "type": {
+      "typeName": ""
+    },
+    "rule": {
+      "id": "MORFOLOGIK_RULE",
+      "subId": 0,
+      "description": "",
+      "issueType": "",
+      "urls": null,
+      "category": {
+        "id": "",
+        "name": ""
+      },
+      "isPremium": false
+    }
+  },
+  {
+    "message": "Possible spelling mistake. Did you mean 'waistcoat'?",
+    "shortMessage": "",
+    "offset": 362,
+    "length": 8,
+    "replacements": [
+      {
+        "value": "waistcoat",
+        "shortDescription": null
+      }
+    ],
+    "sentence": "",
+    "contextForSureMatch": 0,
+    "ignoreForIncompleteSentence": false,
+    "type": {
+      "typeName": ""
+    },
+    "rule": {
+      "id": "MORFOLOGIK_RULE",
+      "subId": 0,
+      "description": "",
+      "issueType": "",
+      "urls": null,
+      "category": {
+        "id": "",
+        "name": ""
+      },
+      "isPremium": false
+    }
+  },
+  {
+    "message": "Possible spelling mistake. Did you mean 'poker'?",
+    "shortMessage": "",
+    "offset": 371,
+    "length": 5,
+    "replacements": [
+      {
+        "value": "poker",
+        "shortDescription": null
+      },
+      {
+        "value": "pocket",
+        "shortDescription": null
+      },
+      {
+        "value": "poet",
+        "shortDescription": null
+      },
+      {
+        "value": "poke",
+        "shortDescription": null
+      },
+      {
+        "value": "poked",
+        "shortDescription": null
+      }
+    ],
+    "sentence": "",
+    "contextForSureMatch": 0,
+    "ignoreForIncompleteSentence": false,
+    "type": {
+      "typeName": ""
+    },
+    "rule": {
+      "id": "MORFOLOGIK_RULE",
+      "subId": 0,
+      "description": "",
+      "issueType": "",
+      "urls": null,
+      "category": {
+        "id": "",
+        "name": ""
+      },
+      "isPremium": false
+    }
+  },
+  {
+    "message": "Possible spelling mistake. Did you mean 'buried'?",
+    "shortMessage": "",
+    "offset": 405,
+    "length": 6,
+    "replacements": [
+      {
+        "value": "buried",
+        "shortDescription": null
+      },
+      {
+        "value": "hurried",
+        "shortDescription": null
+      },
+      {
+        "value": "hurled",
+        "shortDescription": null
+      }
+    ],
+    "sentence": "",
+    "contextForSureMatch": 0,
+    "ignoreForIncompleteSentence": false,
+    "type": {
+      "typeName": ""
+    },
+    "rule": {
+      "id": "MORFOLOGIK_RULE",
+      "subId": 0,
+      "description": "",
+      "issueType": "",
+      "urls": null,
+      "category": {
+        "id": "",
+        "name": ""
+      },
+      "isPremium": false
+    }
+  },
+  {
+    "message": "Possible spelling mistake. Did you mean 'feet'?",
+    "shortMessage": "",
+    "offset": 437,
+    "length": 5,
+    "replacements": [
+      {
+        "value": "feet",
+        "shortDescription": null
+      },
+      {
+        "value": "fete",
+        "shortDescription": null
+      }
+    ],
+    "sentence": "",
+    "contextForSureMatch": 0,
+    "ignoreForIncompleteSentence": false,
+    "type": {
+      "typeName": ""
+    },
+    "rule": {
+      "id": "MORFOLOGIK_RULE",
+      "subId": 0,
+      "description": "",
+      "issueType": "",
+      "urls": null,
+      "category": {
+        "id": "",
+        "name": ""
+      },
+      "isPremium": false
+    }
+  },
+  {
+    "message": "Possible spelling mistake. Did you mean 'across'?",
+    "shortMessage": "",
+    "offset": 459,
+    "length": 7,
+    "replacements": [
+      {
+        "value": "across",
+        "shortDescription": null
+      }
+    ],
+    "sentence": "",
+    "contextForSureMatch": 0,
+    "ignoreForIncompleteSentence": false,
+    "type": {
+      "typeName": ""
+    },
+    "rule": {
+      "id": "MORFOLOGIK_RULE",
+      "subId": 0,
+      "description": "",
+      "issueType": "",
+      "urls": null,
+      "category": {
+        "id": "",
+        "name": ""
+      },
+      "isPremium": false
+    }
+  },
+  {
+    "message": "Possible spelling mistake. Did you mean 'waistcoat'?",
+    "shortMessage": "",
+    "offset": 529,
+    "length": 8,
+    "replacements": [
+      {
+        "value": "waistcoat",
+        "shortDescription": null
+      }
+    ],
+    "sentence": "",
+    "contextForSureMatch": 0,
+    "ignoreForIncompleteSentence": false,
+    "type": {
+      "typeName": ""
+    },
+    "rule": {
+      "id": "MORFOLOGIK_RULE",
+      "subId": 0,
+      "description": "",
+      "issueType": "",
+      "urls": null,
+      "category": {
+        "id": "",
+        "name": ""
+      },
+      "isPremium": false
+    }
+  },
+  {
+    "message": "Possible spelling mistake. Did you mean 'poker'?",
+    "shortMessage": "",
+    "offset": 538,
+    "length": 5,
+    "replacements": [
+      {
+        "value": "poker",
+        "shortDescription": null
+      },
+      {
+        "value": "pocket",
+        "shortDescription": null
+      },
+      {
+        "value": "poet",
+        "shortDescription": null
+      },
+      {
+        "value": "poke",
+        "shortDescription": null
+      },
+      {
+        "value": "poked",
+        "shortDescription": null
+      }
+    ],
+    "sentence": "",
+    "contextForSureMatch": 0,
+    "ignoreForIncompleteSentence": false,
+    "type": {
+      "typeName": ""
+    },
+    "rule": {
+      "id": "MORFOLOGIK_RULE",
+      "subId": 0,
+      "description": "",
+      "issueType": "",
+      "urls": null,
+      "category": {
+        "id": "",
+        "name": ""
+      },
+      "isPremium": false
+    }
+  },
+  {
+    "message": "Possible spelling mistake. Did you mean 'each'?",
+    "shortMessage": "",
+    "offset": 550,
+    "length": 4,
+    "replacements": [
+      {
+        "value": "each",
+        "shortDescription": null
+      },
+      {
+        "value": "watch",
+        "shortDescription": null
+      },
+      {
+        "value": "wash",
+        "shortDescription": null
+      },
+      {
+        "value": "bach",
+        "shortDescription": null
+      },
+      {
+        "value": "mach",
+        "shortDescription": null
+      }
+    ],
+    "sentence": "",
+    "contextForSureMatch": 0,
+    "ignoreForIncompleteSentence": false,
+    "type": {
+      "typeName": ""
+    },
+    "rule": {
+      "id": "MORFOLOGIK_RULE",
+      "subId": 0,
+      "description": "",
+      "issueType": "",
+      "urls": null,
+      "category": {
+        "id": "",
+        "name": ""
+      },
+      "isPremium": false
+    }
+  },
+  {
+    "message": "Possible spelling mistake. Did you mean 'curiosities'?",
+    "shortMessage": "",
+    "offset": 591,
+    "length": 10,
+    "replacements": [
+      {
+        "value": "curiosities",
+        "shortDescription": null
+      }
+    ],
+    "sentence": "",
+    "contextForSureMatch": 0,
+    "ignoreForIncompleteSentence": false,
+    "type": {
+      "typeName": ""
+    },
+    "rule": {
+      "id": "MORFOLOGIK_RULE",
+      "subId": 0,
+      "description": "",
+      "issueType": "",
+      "urls": null,
+      "category": {
+        "id": "",
+        "name": ""
+      },
+      "isPremium": false
+    }
+  },
+  {
+    "message": "Possible spelling mistake. Did you mean 'across'?",
+    "shortMessage": "",
+    "offset": 611,
+    "length": 7,
+    "replacements": [
+      {
+        "value": "across",
+        "shortDescription": null
+      }
+    ],
+    "sentence": "",
+    "contextForSureMatch": 0,
+    "ignoreForIncompleteSentence": false,
+    "type": {
+      "typeName": ""
+    },
+    "rule": {
+      "id": "MORFOLOGIK_RULE",
+      "subId": 0,
+      "description": "",
+      "issueType": "",
+      "urls": null,
+      "category": {
+        "id": "",
+        "name": ""
+      },
+      "isPremium": false
+    }
+  },
+  {
+    "message": "Possible spelling mistake. Did you mean 'field'?",
+    "shortMessage": "",
+    "offset": 623,
+    "length": 5,
+    "replacements": [
+      {
+        "value": "field",
+        "shortDescription": null
+      }
+    ],
+    "sentence": "",
+    "contextForSureMatch": 0,
+    "ignoreForIncompleteSentence": false,
+    "type": {
+      "typeName": ""
+    },
+    "rule": {
+      "id": "MORFOLOGIK_RULE",
+      "subId": 0,
+      "description": "",
+      "issueType": "",
+      "urls": null,
+      "category": {
+        "id": "",
+        "name": ""
+      },
+      "isPremium": false
+    }
+  },
+  {
+    "message": "Possible spelling mistake. Did you mean 'fortunately'?",
+    "shortMessage": "",
+    "offset": 643,
+    "length": 10,
+    "replacements": [
+      {
+        "value": "fortunately",
+        "shortDescription": null
+      }
+    ],
+    "sentence": "",
+    "contextForSureMatch": 0,
+    "ignoreForIncompleteSentence": false,
+    "type": {
+      "typeName": ""
+    },
+    "rule": {
+      "id": "MORFOLOGIK_RULE",
+      "subId": 0,
+      "description": "",
+      "issueType": "",
+      "urls": null,
+      "category": {
+        "id": "",
+        "name": ""
+      },
+      "isPremium": false
+    }
+  },
+  {
+    "message": "Possible typo: you repeated a word",
+    "shortMessage": "",
+    "offset": 716,
+    "length": 7,
+    "replacements": [
+      {
+        "value": "the",
+        "shortDescription": null
+      }
+    ],
+    "sentence": "",
+    "contextForSureMatch": 0,
+    "ignoreForIncompleteSentence": false,
+    "type": {
+      "typeName": ""
+    },
+    "rule": {
+      "id": "",
+      "subId": 0,
+      "description": "",
+      "issueType": "duplication",
+      "urls": null,
+      "category": {
+        "id": "",
+        "name": ""
+      },
+      "isPremium": false
+    }
+  },
+  {
+    "message": "Possible spelling mistake. Did you mean 'when'?",
+    "shortMessage": "",
+    "offset": 755,
+    "length": 5,
+    "replacements": [
+      {
+        "value": "when",
+        "shortDescription": null
+      },
+      {
+        "value": "went",
+        "shortDescription": null
+      },
+      {
+        "value": "wheat",
+        "shortDescription": null
+      },
+      {
+        "value": "ghent",
+        "shortDescription": null
+      },
+      {
+        "value": "whet",
+        "shortDescription": null
+      }
+    ],
+    "sentence": "",
+    "contextForSureMatch": 0,
+    "ignoreForIncompleteSentence": false,
+    "type": {
+      "typeName": ""
+    },
+    "rule": {
+      "id": "MORFOLOGIK_RULE",
+      "subId": 0,
+      "description": "",
+      "issueType": "",
+      "urls": null,
+      "category": {
+        "id": "",
+        "name": ""
+      },
+      "isPremium": false
+    }
+  },
+  {
+    "message": "Possible spelling mistake. Did you mean 'considering'?",
+    "shortMessage": "",
+    "offset": 788,
+    "length": 11,
+    "replacements": [
+      {
+        "value": "considering",
+        "shortDescription": null
+      }
+    ],
+    "sentence": "",
+    "contextForSureMatch": 0,
+    "ignoreForIncompleteSentence": false,
+    "type": {
+      "typeName": ""
+    },
+    "rule": {
+      "id": "MORFOLOGIK_RULE",
+      "subId": 0,
+      "description": "",
+      "issueType": "",
+      "urls": null,
+      "category": {
+        "id": "",
+        "name": ""
+      },
+      "isPremium": false
+    }
+  },
+  {
+    "message": "Possible spelling mistake. Did you mean 'again'?",
+    "shortMessage": "",
+    "offset": 836,
+    "length": 5,
+    "replacements": [
+      {
+        "value": "again",
+        "shortDescription": null
+      },
+      {
+        "value": "asian",
+        "shortDescription": null
+      },
+      {
+        "value": "avian",
+        "shortDescription": null
+      },
+      {
+        "value": "arian",
+        "shortDescription": null
+      }
+    ],
+    "sentence": "",
+    "contextForSureMatch": 0,
+    "ignoreForIncompleteSentence": false,
+    "type": {
+      "typeName": ""
+    },
+    "rule": {
+      "id": "MORFOLOGIK_RULE",
+      "subId": 0,
+      "description": "",
+      "issueType": "",
+      "urls": null,
+      "category": {
+        "id": "",
+        "name": ""
+      },
+      "isPremium": false
+    }
+  },
+  {
+    "message": "Possible spelling mistake. Did you mean 'when'?",
+    "shortMessage": "",
+    "offset": 860,
+    "length": 5,
+    "replacements": [
+      {
+        "value": "when",
+        "shortDescription": null
+      },
+      {
+        "value": "went",
+        "shortDescription": null
+      },
+      {
+        "value": "wheat",
+        "shortDescription": null
+      },
+      {
+        "value": "ghent",
+        "shortDescription": null
+      },
+      {
+        "value": "whet",
+        "shortDescription": null
+      }
+    ],
+    "sentence": "",
+    "contextForSureMatch": 0,
+    "ignoreForIncompleteSentence": false,
+    "type": {
+      "typeName": ""
+    },
+    "rule": {
+      "id": "MORFOLOGIK_RULE",
+      "subId": 0,
+      "description": "",
+      "issueType": "",
+      "urls": null,
+      "category": {
+        "id": "",
+        "name": ""
+      },
+      "isPremium": false
+    }
+  },
+  {
+    "message": "Possible spelling mistake. Did you mean 'suddenly'?",
+    "shortMessage": "",
+    "offset": 922,
+    "length": 7,
+    "replacements": [
+      {
+        "value": "suddenly",
+        "shortDescription": null
+      }
+    ],
+    "sentence": "",
+    "contextForSureMatch": 0,
+    "ignoreForIncompleteSentence": false,
+    "type": {
+      "typeName": ""
+    },
+    "rule": {
+      "id": "MORFOLOGIK_RULE",
+      "subId": 0,
+      "description": "",
+      "issueType": "",
+      "urls": null,
+      "category": {
+        "id": "",
+        "name": ""
+      },
+      "isPremium": false
+    }
+  },
+  {
+    "message": "Possible spelling mistake. Did you mean 'suddenly'?",
+    "shortMessage": "",
+    "offset": 939,
+    "length": 7,
+    "replacements": [
+      {
+        "value": "suddenly",
+        "shortDescription": null
+      }
+    ],
+    "sentence": "",
+    "contextForSureMatch": 0,
+    "ignoreForIncompleteSentence": false,
+    "type": {
+      "typeName": ""
+    },
+    "rule": {
+      "id": "MORFOLOGIK_RULE",
+      "subId": 0,
+      "description": "",
+      "issueType": "",
+      "urls": null,
+      "category": {
+        "id": "",
+        "name": ""
+      },
+      "isPremium": false
+    }
+  },
+  {
+    "message": "Possible spelling mistake. Did you mean 'stopping'?",
+    "shortMessage": "",
+    "offset": 990,
+    "length": 7,
+    "replacements": [
+      {
+        "value": "stopping",
+        "shortDescription": null
+      },
+      {
+        "value": "storing",
+        "shortDescription": null
+      },
+      {
+        "value": "scoping",
+        "shortDescription": null
+      },
+      {
+        "value": "sloping",
+        "shortDescription": null
+      },
+      {
+        "value": "stomping",
+        "shortDescription": null
+      }
+    ],
+    "sentence": "",
+    "contextForSureMatch": 0,
+    "ignoreForIncompleteSentence": false,
+    "type": {
+      "typeName": ""
+    },
+    "rule": {
+      "id": "MORFOLOGIK_RULE",
+      "subId": 0,
+      "description": "",
+      "issueType": "",
+      "urls": null,
+      "category": {
+        "id": "",
+        "name": ""
+      },
+      "isPremium": false
+    }
+  },
+  {
+    "message": "Possible spelling mistake. Did you mean 'either'?",
+    "shortMessage": "",
+    "offset": 1063,
+    "length": 6,
+    "replacements": [
+      {
+        "value": "either",
+        "shortDescription": null
+      },
+      {
+        "value": "esther",
+        "shortDescription": null
+      },
+      {
+        "value": "ether",
+        "shortDescription": null
+      },
+      {
+        "value": "nether",
+        "shortDescription": null
+      },
+      {
+        "value": "wether",
+        "shortDescription": null
+      }
+    ],
+    "sentence": "",
+    "contextForSureMatch": 0,
+    "ignoreForIncompleteSentence": false,
+    "type": {
+      "typeName": ""
+    },
+    "rule": {
+      "id": "MORFOLOGIK_RULE",
+      "subId": 0,
+      "description": "",
+      "issueType": "",
+      "urls": null,
+      "category": {
+        "id": "",
+        "name": ""
+      },
+      "isPremium": false
+    }
+  },
+  {
+    "message": "Possible spelling mistake. Did you mean 'when'?",
+    "shortMessage": "",
+    "offset": 1153,
+    "length": 5,
+    "replacements": [
+      {
+        "value": "when",
+        "shortDescription": null
+      },
+      {
+        "value": "went",
+        "shortDescription": null
+      },
+      {
+        "value": "wheat",
+        "shortDescription": null
+      },
+      {
+        "value": "ghent",
+        "shortDescription": null
+      },
+      {
+        "value": "whet",
+        "shortDescription": null
+      }
+    ],
+    "sentence": "",
+    "contextForSureMatch": 0,
+    "ignoreForIncompleteSentence": false,
+    "type": {
+      "typeName": ""
+    },
+    "rule": {
+      "id": "MORFOLOGIK_RULE",
+      "subId": 0,
+      "description": "",
+      "issueType": "",
+      "urls": null,
+      "category": {
+        "id": "",
+        "name": ""
+      },
+      "isPremium": false
+    }
+  },
+  {
+    "message": "Possible spelling mistake. Did you mean 'happen'?",
+    "shortMessage": "",
+    "offset": 1214,
+    "length": 5,
+    "replacements": [
+      {
+        "value": "happen",
+        "shortDescription": null
+      },
+      {
+        "value": "haven",
+        "shortDescription": null
+      },
+      {
+        "value": "hagen",
+        "shortDescription": null
+      },
+      {
+        "value": "papen",
+        "shortDescription": null
+      },
+      {
+        "value": "hapten",
+        "shortDescription": null
+      }
+    ],
+    "sentence": "",
+    "contextForSureMatch": 0,
+    "ignoreForIncompleteSentence": false,
+    "type": {
+      "typeName": ""
+    },
+    "rule": {
+      "id": "MORFOLOGIK_RULE",
+      "subId": 0,
+      "description": "",
+      "issueType": "",
+      "urls": null,
+      "category": {
+        "id": "",
+        "name": ""
+      },
+      "isPremium": false
+    }
+  },
+  {
+    "message": "Use a comma before 'but' if it connects two independent clauses (unless they are closely connected and short).",
+    "shortMessage": "",
+    "offset": 1290,
+    "length": 6,
+    "replacements": [
+      {
+        "value": "to, but",
+        "shortDescription": null
+      }
+    ],
+    "sentence": "",
+    "contextForSureMatch": 0,
+    "ignoreForIncompleteSentence": false,
+    "type": {
+      "typeName": ""
+    },
+    "rule": {
+      "id": "PUNCTUATION/COMMA_COMPOUND_SENTENCE/0",
+      "subId": 0,
+      "description": "",
+      "issueType": "",
+      "urls": null,
+      "category": {
+        "id": "",
+        "name": ""
+      },
+      "isPremium": false
+    }
+  },
+  {
+    "message": "Did you mean too?",
+    "shortMessage": "",
+    "offset": 1304,
+    "length": 2,
+    "replacements": [
+      {
+        "value": "too",
+        "shortDescription": null
+      }
+    ],
+    "sentence": "",
+    "contextForSureMatch": 0,
+    "ignoreForIncompleteSentence": false,
+    "type": {
+      "typeName": ""
+    },
+    "rule": {
+      "id": "CONFUSED_WORDS/TO_TOO/12",
+      "subId": 0,
+      "description": "",
+      "issueType": "",
+      "urls": null,
+      "category": {
+        "id": "",
+        "name": ""
+      },
+      "isPremium": false
+    }
+  },
+  {
+    "message": "Possible spelling mistake. Did you mean 'tried'?",
+    "shortMessage": "",
+    "offset": 1237,
+    "length": 5,
+    "replacements": [
+      {
+        "value": "tried",
+        "shortDescription": null
+      },
+      {
+        "value": "toyed",
+        "shortDescription": null
+      },
+      {
+        "value": "treed",
+        "shortDescription": null
+      },
+      {
+        "value": "trued",
+        "shortDescription": null
+      }
+    ],
+    "sentence": "",
+    "contextForSureMatch": 0,
+    "ignoreForIncompleteSentence": false,
+    "type": {
+      "typeName": ""
+    },
+    "rule": {
+      "id": "MORFOLOGIK_RULE",
+      "subId": 0,
+      "description": "",
+      "issueType": "",
+      "urls": null,
+      "category": {
+        "id": "",
+        "name": ""
+      },
+      "isPremium": false
+    }
+  },
+  {
+    "message": "Possible spelling mistake. Did you mean 'coming'?",
+    "shortMessage": "",
+    "offset": 1282,
+    "length": 7,
+    "replacements": [
+      {
+        "value": "coming",
+        "shortDescription": null
+      },
+      {
+        "value": "combing",
+        "shortDescription": null
+      },
+      {
+        "value": "comping",
+        "shortDescription": null
+      }
+    ],
+    "sentence": "",
+    "contextForSureMatch": 0,
+    "ignoreForIncompleteSentence": false,
+    "type": {
+      "typeName": ""
+    },
+    "rule": {
+      "id": "MORFOLOGIK_RULE",
+      "subId": 0,
+      "description": "",
+      "issueType": "",
+      "urls": null,
+      "category": {
+        "id": "",
+        "name": ""
+      },
+      "isPremium": false
+    }
+  },
+  {
+    "message": "Possible spelling mistake. Did you mean 'noticed'?",
+    "shortMessage": "",
+    "offset": 1375,
+    "length": 7,
+    "replacements": [
+      {
+        "value": "noticed",
+        "shortDescription": null
+      },
+      {
+        "value": "noised",
+        "shortDescription": null
+      }
+    ],
+    "sentence": "",
+    "contextForSureMatch": 0,
+    "ignoreForIncompleteSentence": false,
+    "type": {
+      "typeName": ""
+    },
+    "rule": {
+      "id": "MORFOLOGIK_RULE",
+      "subId": 0,
+      "description": "",
+      "issueType": "",
+      "urls": null,
+      "category": {
+        "id": "",
+        "name": ""
+      },
+      "isPremium": false
+    }
+  },
+  {
+    "message": "Possible spelling mistake. Did you mean 'cupboards'?",
+    "shortMessage": "",
+    "offset": 1410,
+    "length": 8,
+    "replacements": [
+      {
+        "value": "cupboards",
+        "shortDescription": null
+      }
+    ],
+    "sentence": "",
+    "contextForSureMatch": 0,
+    "ignoreForIncompleteSentence": false,
+    "type": {
+      "typeName": ""
+    },
+    "rule": {
+      "id": "MORFOLOGIK_RULE",
+      "subId": 0,
+      "description": "",
+      "issueType": "",
+      "urls": null,
+      "category": {
+        "id": "",
+        "name": ""
+      },
+      "isPremium": false
+    }
+  },
+  {
+    "message": "Possible spelling mistake. Did you mean 'bookshelves'?",
+    "shortMessage": "",
+    "offset": 1423,
+    "length": 10,
+    "replacements": [
+      {
+        "value": "bookshelves",
+        "shortDescription": null
+      }
+    ],
+    "sentence": "",
+    "contextForSureMatch": 0,
+    "ignoreForIncompleteSentence": false,
+    "type": {
+      "typeName": ""
+    },
+    "rule": {
+      "id": "MORFOLOGIK_RULE",
+      "subId": 0,
+      "description": "",
+      "issueType": "",
+      "urls": null,
+      "category": {
+        "id": "",
+        "name": ""
+      },
+      "isPremium": false
+    }
+  },
+  {
+    "message": "Possible spelling mistake. Did you mean 'upon'?",
+    "shortMessage": "",
+    "offset": 1481,
+    "length": 5,
+    "replacements": [
+      {
+        "value": "upon",
+        "shortDescription": null
+      },
+      {
+        "value": "upton",
+        "shortDescription": null
+      }
+    ],
+    "sentence": "",
+    "contextForSureMatch": 0,
+    "ignoreForIncompleteSentence": false,
+    "type": {
+      "typeName": ""
+    },
+    "rule": {
+      "id": "MORFOLOGIK_RULE",
+      "subId": 0,
+      "description": "",
+      "issueType": "",
+      "urls": null,
+      "category": {
+        "id": "",
+        "name": ""
+      },
+      "isPremium": false
+    }
+  },
+  {
+    "message": "Possible spelling mistake. Did you mean 'took'?",
+    "shortMessage": "",
+    "offset": 1497,
+    "length": 5,
+    "replacements": [
+      {
+        "value": "took",
+        "shortDescription": null
+      }
+    ],
+    "sentence": "",
+    "contextForSureMatch": 0,
+    "ignoreForIncompleteSentence": false,
+    "type": {
+      "typeName": ""
+    },
+    "rule": {
+      "id": "MORFOLOGIK_RULE",
+      "subId": 0,
+      "description": "",
+      "issueType": "",
+      "urls": null,
+      "category": {
+        "id": "",
+        "name": ""
+      },
+      "isPremium": false
+    }
+  },
+  {
+    "message": "Possible spelling mistake. Did you mean 'shelves'?",
+    "shortMessage": "",
+    "offset": 1530,
+    "length": 6,
+    "replacements": [
+      {
+        "value": "shelves",
+        "shortDescription": null
+      },
+      {
+        "value": "shells",
+        "shortDescription": null
+      },
+      {
+        "value": "shelve",
+        "shortDescription": null
+      }
+    ],
+    "sentence": "",
+    "contextForSureMatch": 0,
+    "ignoreForIncompleteSentence": false,
+    "type": {
+      "typeName": ""
+    },
+    "rule": {
+      "id": "MORFOLOGIK_RULE",
+      "subId": 0,
+      "description": "",
+      "issueType": "",
+      "urls": null,
+      "category": {
+        "id": "",
+        "name": ""
+      },
+      "isPremium": false
+    }
+  },
+  {
+    "message": "Possible spelling mistake. Did you mean 'label'?",
+    "shortMessage": "",
+    "offset": 1559,
+    "length": 6,
+    "replacements": [
+      {
+        "value": "label",
+        "shortDescription": null
+      },
+      {
+        "value": "labels",
+        "shortDescription": null
+      }
+    ],
+    "sentence": "",
+    "contextForSureMatch": 0,
+    "ignoreForIncompleteSentence": false,
+    "type": {
+      "typeName": ""
+    },
+    "rule": {
+      "id": "MORFOLOGIK_RULE",
+      "subId": 0,
+      "description": "",
+      "issueType": "",
+      "urls": null,
+      "category": {
+        "id": "",
+        "name": ""
+      },
+      "isPremium": false
+    }
+  },
+  {
+    "message": "Possible spelling mistake. Did you mean 'disappointment'?",
+    "shortMessage": "",
+    "offset": 1603,
+    "length": 14,
+    "replacements": [
+      {
+        "value": "disappointment",
+        "shortDescription": null
+      }
+    ],
+    "sentence": "",
+    "contextForSureMatch": 0,
+    "ignoreForIncompleteSentence": false,
+    "type": {
+      "typeName": ""
+    },
+    "rule": {
+      "id": "MORFOLOGIK_RULE",
+      "subId": 0,
+      "description": "",
+      "issueType": "",
+      "urls": null,
+      "category": {
+        "id": "",
+        "name": ""
+      },
+      "isPremium": false
+    }
+  },
+  {
+    "message": "Possible spelling mistake. Did you mean 'feel'?",
+    "shortMessage": "",
+    "offset": 1669,
+    "length": 4,
+    "replacements": [
+      {
+        "value": "feel",
+        "shortDescription": null
+      },
+      {
+        "value": "feed",
+        "shortDescription": null
+      },
+      {
+        "value": "feet",
+        "shortDescription": null
+      },
+      {
+        "value": "fees",
+        "shortDescription": null
+      },
+      {
+        "value": "fee",
+        "shortDescription": null
+      }
+    ],
+    "sentence": "",
+    "contextForSureMatch": 0,
+    "ignoreForIncompleteSentence": false,
+    "type": {
+      "typeName": ""
+    },
+    "rule": {
+      "id": "MORFOLOGIK_RULE",
+      "subId": 0,
+      "description": "",
+      "issueType": "",
+      "urls": null,
+      "category": {
+        "id": "",
+        "name": ""
+      },
+      "isPremium": false
+    }
+  },
+  {
+    "message": "Possible spelling mistake. Did you mean 'somebody'?",
+    "shortMessage": "",
+    "offset": 1685,
+    "length": 7,
+    "replacements": [
+      {
+        "value": "somebody",
+        "shortDescription": null
+      }
+    ],
+    "sentence": "",
+    "contextForSureMatch": 0,
+    "ignoreForIncompleteSentence": false,
+    "type": {
+      "typeName": ""
+    },
+    "rule": {
+      "id": "MORFOLOGIK_RULE",
+      "subId": 0,
+      "description": "",
+      "issueType": "",
+      "urls": null,
+      "category": {
+        "id": "",
+        "name": ""
+      },
+      "isPremium": false
+    }
+  },
+  {
+    "message": "Possible spelling mistake. Did you mean 'cupboards'?",
+    "shortMessage": "",
+    "offset": 1742,
+    "length": 8,
+    "replacements": [
+      {
+        "value": "cupboards",
+        "shortDescription": null
+      }
+    ],
+    "sentence": "",
+    "contextForSureMatch": 0,
+    "ignoreForIncompleteSentence": false,
+    "type": {
+      "typeName": ""
+    },
+    "rule": {
+      "id": "MORFOLOGIK_RULE",
+      "subId": 0,
+      "description": "",
+      "issueType": "",
+      "urls": null,
+      "category": {
+        "id": "",
+        "name": ""
+      },
+      "isPremium": false
+    }
+  }
+]

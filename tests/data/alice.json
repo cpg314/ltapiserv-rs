@@ -1,0 +1,44 @@
+[
+  {
+    "message": "Interjections are usually punctuated.",
+    "shortMessage": "",
+    "offset": 141,
+    "length": 2,
+    "replacements": [
+      {
+        "value": "Oh,",
+        "shortDescription": null
+      },
+      {
+        "value": "Oh!",
+        "shortDescription": null
+      },
+      {
+        "value": "Oh?",
+        "shortDescription": null
+      },
+      {
+        "value": "Oh.",
+        "shortDescription": null
+      }
+    ],
+    "sentence": "",
+    "contextForSureMatch": 0,
+    "ignoreForIncompleteSentence": false,
+    "type": {
+      "typeName": ""
+    },
+    "rule": {
+      "id": "PUNCTUATION/INTERJECTIONS_PUNCTUATION/0",
+      "subId": 0,
+      "description": "",
+      "issueType": "",
+      "urls": null,
+      "category": {
+        "id": "",
+        "name": ""
+      },
+      "isPremium": false
+    }
+  }
+]

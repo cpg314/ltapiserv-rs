@@ -234,19 +234,19 @@ impl From<Language> for LanguageResponse {
     }
 }
 
-#[derive(Serialize, Deserialize, Default, Debug)]
+#[derive(Serialize, Deserialize, Default, PartialEq, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct MatchType {
     pub type_name: String,
 }
 
-#[derive(Serialize, Deserialize, Default, Debug)]
+#[derive(Serialize, Deserialize, Default, PartialEq, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct RuleCategory {
     id: String,
     name: String,
 }
-#[derive(Serialize, Deserialize, Default, Debug)]
+#[derive(Serialize, Deserialize, Default, PartialEq, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct Rule {
     pub id: String,
@@ -290,7 +290,7 @@ impl Rule {
     }
 }
 
-#[derive(Serialize, Deserialize, Default, Debug)]
+#[derive(Serialize, Deserialize, Default, PartialEq, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct Replacement {
     pub value: String,
@@ -313,7 +313,7 @@ impl From<String> for Replacement {
     }
 }
 
-#[derive(Serialize, Deserialize, Default, Debug)]
+#[derive(Serialize, Deserialize, Default, PartialEq, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct Match {
     pub message: String,

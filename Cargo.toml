@@ -46,3 +46,7 @@ client = ["dep:miette", "dep:reqwest"]
 [profile.release]
 incremental = true
 lto = "off"
+
+[dev-dependencies]
+include_dir = { version = "0.7.4", features = ["glob"] }
+pretty_assertions = "1.4.0"
