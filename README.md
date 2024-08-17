@@ -1,21 +1,21 @@
-# ltapiserv-rs
+![ltapiserv-rs](doc/logo.webp)
 
 This provides a **lightweight alternative backend implementation** of the LanguageTool API for **offline grammar and spell checking**, based on:
 
 - [nlprule](https://github.com/bminixhofer/nlprule) for grammar and style checking, using the [LanguageTool rules](https://github.com/languagetool-org/languagetool).
 - [symspell](https://github.com/reneklacan/symspell) for spell-checking.
 
+A simple command-line client, `ltapi-client`, is also provided, displaying results graphically with [miette](https://docs.rs/miette/latest/miette/).
+
 ## Quick start
 
 1. [Install the server](#installation), which is a single binary with no dependencies, which can be run as a systemd service. Debian/Ubuntu and Arch packages are provided. Alternatively, a Docker image is available.
-2. [Configure your client](#usage-clients) to use the local server.
+2. [Configure your client](#usage-clients) (browser, editor, `ltapi-client`, ...) to use the local server.
 
 ## Screenshots
 
 ![Illustration](doc/illustration.png) \
 _Using the `ltapiserv-rs` server with the official LanguageTool browser extension._
-
-A simple command-line client is also provided, displaying results graphically with [miette](https://docs.rs/miette/latest/miette/). If `pandoc` is installed, the client can use it to convert input files into plain text.
 
 ![Command line interface](doc/client.png)
 _Output from the client CLI_
@@ -140,7 +140,8 @@ Options:
   -h, --help                       Print help
 ```
 
-The return code will be `1` if any error is detected. The server address can be configured through the `LTAPI_SERVER` environment variable.
+- The return code will be `1` if any error is detected. The server address can be configured through the `LTAPI_SERVER` environment variable.
+- If `pandoc` is installed, the client can use it to convert input files into plain text.
 
 The client uses [miette](https://docs.rs/miette/latest/miette/index.html) to get a nice graphical reporting of the errors:
 
