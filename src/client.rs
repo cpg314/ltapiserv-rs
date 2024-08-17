@@ -1,5 +1,6 @@
 use std::path::PathBuf;
 
+use anyhow::Context;
 use clap::Parser;
 use itertools::Itertools;
 use log::*;
@@ -22,6 +23,9 @@ struct Flags {
     /// Number of suggestions to display
     #[clap(long, default_value_t = 3)]
     suggestions: usize,
+    /// Convert to plaintext with pandoc, removing code blocks. Line numbers are not preserved.
+    #[clap(long, requires = "filename")]
+    pandoc: bool,
 }
 
 #[tokio::main]
@@ -40,11 +44,28 @@ async fn main_impl() -> anyhow::Result<()> {
         .init();
 
     let text = if let Some(filename) = &args.filename {
-        std::fs::read_to_string(filename)?
+        if args.pandoc {
+            info!("Converting to plain text with pandoc");
+            let filter = tempfile::NamedTempFile::new()?;
+            std::fs::write(filter.path(), include_str!("filter.lua"))?;
+            let out = std::process::Command::new("pandoc")
+                .arg(filename)
+                .args(["--to", "plain", "--lua-filter"])
+                .arg(filter.path())
+                .stdout(std::process::Stdio::piped())
+                .output()
+                .context("pandoc not found")?;
+            anyhow::ensure!(out.status.success(), "pandoc did not execute successfully");
+            String::from_utf8_lossy(&out.stdout).to_string()
+        } else {
+            std::fs::read_to_string(filename)
+                .with_context(|| format!("Could not open {:?}", filename))?
+        }
     } else {
         info!("Reading from stdin",);
         std::io::read_to_string(std::io::stdin())?
     };
+    debug!("Text to process: {}", text);
 
     // Request and read results
     let endpoint = args.server.join("v2/check")?;

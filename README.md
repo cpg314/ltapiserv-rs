@@ -15,9 +15,10 @@ This provides a **lightweight alternative backend implementation** of the Langua
 ![Illustration](doc/illustration.png) \
 _Using the `ltapiserv-rs` server with the official LanguageTool browser extension._
 
-A simple command-line client is also provided, displaying results graphically with [miette](https://docs.rs/miette/latest/miette/):
+A simple command-line client is also provided, displaying results graphically with [miette](https://docs.rs/miette/latest/miette/). If `pandoc` is installed, the client can use it to convert input files into plain text.
 
 ![Command line interface](doc/client.png)
+_Output from the client CLI_
 
 ## Background
 
@@ -122,22 +123,37 @@ Install the official LanguageTool browser extension (e.g. for [Chrome](https://l
 
 A command line client, `ltapi-client`, is also included in this project.
 
-```console
-$ cat text.txt | ltapi-client --server http://localhost:8875
-$ ltapi-client --server http://localhost:8875 test.txt
+```
+Run text through a LanguageTool server and display the results
+
+Usage: ltapi-client [OPTIONS] --server <SERVER> [FILENAME]
+
+Arguments:
+  [FILENAME]  Filename; if not provided, will read from stdin
+
+Options:
+  -l, --language <LANGUAGE>        [default: en-US]
+  -s, --server <SERVER>            Server base URL [env: LTAPI_SERVER=http://localhost:8875]
+      --json                       JSON output
+      --suggestions <SUGGESTIONS>  Number of suggestions to display [default: 3]
+      --pandoc                     Convert to plaintext with pandoc, removing code blocks. Line numbers are not preserved.
+  -h, --help                       Print help
 ```
 
 The return code will be `1` if any error is detected. The server address can be configured through the `LTAPI_SERVER` environment variable.
 
-Formats like Markdown, HTML, LaTeX etc. can be processed through `pandoc`:
-
-```console
-$ pandoc README.md -t plain | ltapi-client
-```
-
-The client uses [ariadne](https://docs.rs/ariadne/latest/ariadne/index.html) to get a nice graphical reporting of the errors:
+The client uses [miette](https://docs.rs/miette/latest/miette/index.html) to get a nice graphical reporting of the errors:
 
 ![Command line interface](doc/client.png)
+
+#### Example usage
+
+```console
+$ export LTAPI_SERVER=http://localhost:8875
+$ cat text.txt | ltapi-client
+$ ltapi-client test.txt
+$ ltapi-client --pandoc test.md
+```
 
 ### flycheck-languagetool (emacs)
 
@@ -275,4 +291,4 @@ $ cargo make build
 - Support more languages. German is already supported in `nlprule`, but adding more languages is actually non-trivial because of language-specific assumptions, see [this issue](https://github.com/bminixhofer/nlprule/issues/46) and [this one](https://github.com/bminixhofer/nlprule/issues/14).
 - Support addition and deletion of words to the dictionary. This is pretty simple and corresponds to the `/words/add` and `/words/delete` API endpoints. However, the browser extension seems to store the dictionary locally, unless one logs in to LanguageTool Premium.
 - Reduce the number of false positives of the spellchecker.
-- Add unit and integration tests
+- Expand tests
