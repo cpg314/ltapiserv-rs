@@ -93,6 +93,8 @@ $ # Check status
 $ systemctl --user status ltapiserv-rs
 $ # Check logs
 $ journalctl --user -u ltapiserv-rs -f
+$ # After updating:
+$ systemctl --user restart ltapiserv-rs
 ```
 
 ### tar.gz archive
@@ -105,6 +107,8 @@ $ sudo chmod +x /usr/local/bin/ltapiserv-rs
 $ ln -s $(pwd)/ltapiserv-rs.service ~/.config/systemd/user/ltapiserv-rs.service
 $ systemctl --user daemon-reload && systemctl --user enable --now ltapiserv-rs
 $ systemctl --user status ltapiserv-rs
+$ # After updating:
+$ systemctl --user restart ltapiserv-rs
 ```
 
 See the above remark about the custom dictionary.
