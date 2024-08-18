@@ -118,7 +118,7 @@ async fn main_impl() -> anyhow::Result<()> {
 
     // Setup checkers
     let start = std::time::Instant::now();
-    info!("Initializing...");
+    info!("Initializing, version {}...", env!("CARGO_PKG_VERSION"));
     let mut checkers = if let Some(archive) = &args.archive {
         Checkers::from_archive(archive)?
     } else {
